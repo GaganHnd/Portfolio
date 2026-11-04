@@ -2,50 +2,45 @@ import { SkillGroup } from "@/types";
 
 export const skillGroups: SkillGroup[] = [
   {
-    category: "Design Disciplines",
-    description: "Core creative methodologies and visual craftsmanship",
-    skills: [
-      "User Interface Design (UI)",
-      "User Experience Design (UX)",
-      "Visual Design & Identity",
-      "Editorial & Layout Design",
-      "Typography Systems",
-      "Design Systems & Tokens",
-      "Wireframing & Prototyping",
-      "Motion & Interaction Design",
-    ],
-  },
-  {
-    category: "Design Software & Tools",
-    description: "Industry-standard software for creative production",
+    category: "Primary Design Tools",
+    description: "Confirmed creative tools for visual & interface production",
     skills: [
       "Figma",
-      "Adobe Illustrator",
-      "Adobe Photoshop",
-      "Adobe InDesign",
-      "Adobe After Effects",
-      "Principle / Protopie",
+      "Canva",
     ],
   },
   {
-    category: "Creative Technology",
-    description: "Technical foundations bridging design and engineering",
+    category: "Design Disciplines",
+    description: "Core creative practice and user-centred methodologies",
     skills: [
-      "HTML5 / Semantic Web",
-      "CSS3 / SCSS / Tailwind CSS",
-      "JavaScript & Modern Frameworks",
-      "Design-to-Code Implementation",
-      "Micro-interactions & Keyframe Motion",
-      "Accessibility Standards (WCAG)",
+      "Graphic Design",
+      "UI/UX Design",
+      "Visual Identity & Branding",
+      "Event Posters & Creatives",
+      "Mobile Application Interfaces",
+      "Web Dashboards",
+      "Typography & Layout",
+      "Intuitive Interface Design",
+    ],
+  },
+  {
+    category: "Technical Perspective",
+    description: "Academic & conceptual foundations bridging design and technology",
+    skills: [
+      "Computer Science & Business Systems Foundation",
+      "Creative Problem Solving",
+      "Technical Understanding & Design Feasibility",
+      "Structure, Logic & Systematic Thinking",
+      "Human-Centered Interaction Principles",
     ],
   },
 ];
 
 export const educationHistory = [
   {
-    degree: "Design & Technology Studies",
-    institution: "Institution Placeholder",
-    period: "2020 — 2024",
-    focus: "Visual communication, digital product interfaces, and interactive systems",
+    degree: "Computer Science and Business Systems",
+    institution: "University Graduate",
+    period: "Graduate",
+    focus: "Intersection of computational logic, business systems, and visual interface communication",
   },
 ];

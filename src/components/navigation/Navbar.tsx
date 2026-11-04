@@ -13,7 +13,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "WORK", href: "#work" },
+  { label: "WORK", href: "#summary" },
   { label: "ABOUT", href: "#about" },
   { label: "CONTACT", href: "#contact" },
 ];
@@ -187,7 +187,7 @@ export function Navbar() {
               Gagan Handral
             </p>
             <p className="text-xs text-neutral-500 leading-relaxed">
-              Graphic Designer / UI/UX Designer
+              Graphic Designer · UI/UX Designer
             </p>
             <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 pt-1">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
