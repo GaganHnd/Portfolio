@@ -10,27 +10,27 @@ export function Divider({ label, withCross = false, className, ...props }: Divid
   return (
     <div
       className={cn(
-        "relative w-full border-t border-white/10 my-8 md:my-16 flex items-center justify-between",
+        "relative w-full border-t border-white/10 my-8 sm:my-12 md:my-16 flex items-center justify-between",
         className
       )}
       {...props}
     >
       {withCross && (
         <span
-          className="absolute -top-[7px] left-0 font-mono text-xs text-neutral-500 select-none"
+          className="absolute -top-[7px] left-0 font-mono text-xs text-neutral-500 select-none pointer-events-none"
           aria-hidden="true"
         >
           +
         </span>
       )}
       {label && (
-        <span className="font-mono text-[10px] md:text-xs text-neutral-500 uppercase tracking-widest bg-background px-3 -mt-2.5">
+        <span className="font-mono text-[9px] sm:text-[10px] md:text-xs text-neutral-500 uppercase tracking-wider sm:tracking-widest bg-background px-2 sm:px-3 -mt-2.5 mx-auto max-w-[85%] text-center truncate">
           {label}
         </span>
       )}
       {withCross && (
         <span
-          className="absolute -top-[7px] right-0 font-mono text-xs text-neutral-500 select-none"
+          className="absolute -top-[7px] right-0 font-mono text-xs text-neutral-500 select-none pointer-events-none"
           aria-hidden="true"
         >
           +

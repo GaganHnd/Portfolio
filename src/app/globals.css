@@ -22,6 +22,24 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Lenis Recommended Styles */
@@ -102,7 +120,6 @@ html.lenis body {
     border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  /* Grain overlay for subtle cinematic texture */
   .bg-noise {
     background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
     background-size: 24px 24px;

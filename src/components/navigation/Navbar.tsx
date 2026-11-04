@@ -25,7 +25,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 30) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -33,7 +33,7 @@ export function Navbar() {
 
       // Active section detection
       const sections = navItems.map((item) => item.href.substring(1));
-      const currentPos = window.scrollY + 200;
+      const currentPos = window.scrollY + 180;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -54,7 +54,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on Escape
+  // Close mobile menu on Escape and manage scroll lock
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileMenuOpen(false);
@@ -89,10 +89,10 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 w-full z-50 transition-all duration-300 px-6 md:px-12 lg:px-20",
+          "fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4 sm:px-6 md:px-12 lg:px-20",
           scrolled
-            ? "py-4 bg-[#050505]/85 backdrop-blur-md border-b border-white/10 shadow-2xl"
-            : "py-7 bg-transparent border-b border-transparent"
+            ? "py-3.5 sm:py-4 bg-[#050505]/90 backdrop-blur-md border-b border-white/10 shadow-2xl"
+            : "py-5 sm:py-7 bg-transparent border-b border-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -100,7 +100,7 @@ export function Navbar() {
           <MagneticWrapper strength={0.2}>
             <Link
               href="/"
-              className="text-lg md:text-xl font-heading font-extrabold tracking-tight text-white uppercase focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white group flex items-center gap-2"
+              className="text-base sm:text-lg md:text-xl font-heading font-extrabold tracking-tight text-white uppercase focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white group flex items-center gap-1.5 sm:gap-2 flex-shrink-0"
               aria-label="Gagan Handral Homepage"
             >
               <span>{personalInfo.wordmark}</span>
@@ -148,7 +148,7 @@ export function Navbar() {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-300 hover:text-white border border-white/10 hover:border-white/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white"
+            className="md:hidden p-2 text-neutral-300 hover:text-white border border-white/10 hover:border-white/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white flex-shrink-0"
             aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
           >
@@ -162,10 +162,10 @@ export function Navbar() {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-40 bg-[#050505] flex flex-col justify-between px-8 py-28 md:hidden"
+          className="fixed inset-0 z-40 bg-[#050505] flex flex-col justify-between px-6 sm:px-8 py-24 sm:py-28 md:hidden overflow-y-auto"
         >
-          <div className="space-y-3">
-            <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-6">
+          <div className="space-y-4">
+            <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4 sm:mb-6">
               Navigation Menu
             </span>
             {navItems.map((item, index) => (
@@ -173,7 +173,7 @@ export function Navbar() {
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="flex items-baseline justify-between text-3xl font-heading font-bold text-white uppercase tracking-tight hover:text-neutral-300 transition-colors"
+                  className="flex items-baseline justify-between text-2xl sm:text-3xl font-heading font-bold text-white uppercase tracking-tight hover:text-neutral-300 transition-colors"
                 >
                   <span>{item.label}</span>
                   <span className="font-mono text-xs text-neutral-500">0{index + 1}</span>
@@ -182,14 +182,14 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="space-y-4 pt-8 border-t border-white/10">
+          <div className="space-y-3 pt-6 sm:pt-8 border-t border-white/10 mt-8">
             <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
               Gagan Handral
             </p>
             <p className="text-xs text-neutral-500 leading-relaxed">
               Graphic Designer / UI/UX Designer
             </p>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 pt-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 pt-1">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
               Available for select projects
             </div>
