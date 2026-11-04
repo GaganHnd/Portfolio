@@ -1,0 +1,26 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0D0D0D"/>
+  <rect x="1" y="1" width="1198" height="798" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <!-- Kinetic Typographic Poster Grid -->
+  <line x1="120" y1="0" x2="120" y2="800" stroke="rgba(255,255,255,0.05)"/>
+  <line x1="400" y1="0" x2="400" y2="800" stroke="rgba(255,255,255,0.05)"/>
+  <line x1="800" y1="0" x2="800" y2="800" stroke="rgba(255,255,255,0.05)"/>
+  <line x1="1080" y1="0" x2="1080" y2="800" stroke="rgba(255,255,255,0.05)"/>
+  
+  <text x="140" y="240" fill="#FFFFFF" font-family="sans-serif" font-weight="900" font-size="110" letter-spacing="-2">KINESIS.</text>
+  <text x="140" y="340" fill="transparent" stroke="rgba(255,255,255,0.3)" stroke-width="2" font-family="sans-serif" font-weight="900" font-size="110" letter-spacing="-2">MOVEMENT</text>
+  <text x="140" y="440" fill="rgba(255,255,255,0.85)" font-family="sans-serif" font-weight="900" font-size="110" letter-spacing="-2">IN FORM</text>
+
+  <!-- Swiss geometry elements -->
+  <rect x="780" y="160" width="280" height="280" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <circle cx="920" cy="300" r="100" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+  <line x1="780" y1="160" x2="1060" y2="440" stroke="rgba(255,255,255,0.15)"/>
+  
+  <!-- Bottom typographic block -->
+  <rect x="140" y="520" width="920" height="1" fill="rgba(255,255,255,0.15)"/>
+  <text x="140" y="560" fill="rgba(255,255,255,0.6)" font-family="sans-serif" font-size="18" font-weight="500">EXPERIMENTAL BRAND IDENTITY SYSTEM • INTERNATIONAL SYMPOSIUM</text>
+  <text x="140" y="600" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="12">GRID: 12 COLUMNS / RATIO 1:1.618 / TYPE: GROTESK CONDENSED</text>
+  
+  <text x="140" y="740" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">02 / IDENTITY SYSTEM — KINESIS</text>
+  <text x="960" y="740" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">BRANDING • 2024</text>
+</svg>

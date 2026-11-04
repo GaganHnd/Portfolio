@@ -1,0 +1,39 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0D0D0D"/>
+  <rect x="1" y="1" width="1198" height="798" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <!-- Subtle architectural grid -->
+  <line x1="80" y1="0" x2="80" y2="800" stroke="rgba(255,255,255,0.04)"/>
+  <line x1="600" y1="0" x2="600" y2="800" stroke="rgba(255,255,255,0.04)"/>
+  <line x1="1120" y1="0" x2="1120" y2="800" stroke="rgba(255,255,255,0.04)"/>
+  <line x1="0" y1="400" x2="1200" y2="400" stroke="rgba(255,255,255,0.04)"/>
+  <!-- UI Mockup Wireframe -->
+  <rect x="160" y="120" width="880" height="560" rx="4" fill="#050505" stroke="rgba(255,255,255,0.12)"/>
+  <rect x="160" y="120" width="880" height="50" fill="#141414" stroke="rgba(255,255,255,0.08)"/>
+  <!-- Window dots -->
+  <circle cx="190" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="210" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="230" cy="145" r="5" fill="rgba(255,255,255,0.2)"/>
+  <!-- Sidebar -->
+  <rect x="160" y="170" width="200" height="510" fill="#080808" stroke="rgba(255,255,255,0.05)"/>
+  <rect x="185" y="210" width="150" height="12" fill="rgba(255,255,255,0.15)"/>
+  <rect x="185" y="240" width="120" height="8" fill="rgba(255,255,255,0.06)"/>
+  <rect x="185" y="265" width="135" height="8" fill="rgba(255,255,255,0.06)"/>
+  <rect x="185" y="290" width="110" height="8" fill="rgba(255,255,255,0.06)"/>
+  <rect x="185" y="315" width="140" height="8" fill="rgba(255,255,255,0.06)"/>
+  <!-- Main canvas card elements -->
+  <rect x="400" y="210" width="380" height="200" fill="#111111" stroke="rgba(255,255,255,0.1)"/>
+  <rect x="430" y="240" width="160" height="16" fill="rgba(255,255,255,0.8)"/>
+  <rect x="430" y="270" width="300" height="10" fill="rgba(255,255,255,0.3)"/>
+  <rect x="430" y="290" width="240" height="10" fill="rgba(255,255,255,0.2)"/>
+  <!-- Active telemetry node -->
+  <circle cx="730" cy="248" r="4" fill="#22C55E"/>
+  <!-- Secondary widgets -->
+  <rect x="810" y="210" width="190" height="200" fill="#111111" stroke="rgba(255,255,255,0.1)"/>
+  <rect x="400" y="440" width="600" height="200" fill="#111111" stroke="rgba(255,255,255,0.1)"/>
+  <!-- Telemetry lines -->
+  <line x1="430" y1="580" x2="960" y2="580" stroke="rgba(255,255,255,0.15)" stroke-dasharray="4 4"/>
+  <path d="M430 550 Q560 480 690 520 T960 490" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+  <!-- Labels -->
+  <text x="80" y="750" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">01 / CONCEPT MOCKUP — AURA INTELLIGENCE</text>
+  <text x="1000" y="750" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">UI/UX • 2024</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#0D0D0D"/>
+  <rect x="1" y="1" width="1198" height="798" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  <!-- Brutalist Monolith Poster -->
+  <rect x="360" y="80" width="480" height="640" fill="#050505" stroke="rgba(255,255,255,0.15)"/>
+  
+  <!-- Massive Typography in Poster -->
+  <text x="400" y="180" fill="#FFFFFF" font-family="sans-serif" font-weight="900" font-size="64" letter-spacing="-1">MONOLITH</text>
+  <text x="400" y="220" fill="rgba(255,255,255,0.5)" font-family="monospace" font-size="12" letter-spacing="4">EXHIBITION 2023</text>
+  
+  <rect x="400" y="250" width="400" height="340" fill="#121212"/>
+  <!-- Abstract geometric monolith artwork -->
+  <path d="M480 550 L600 300 L720 550 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <path d="M600 300 L720 550 L600 520 Z" fill="rgba(255,255,255,0.15)"/>
+  
+  <text x="400" y="630" fill="rgba(255,255,255,0.7)" font-family="sans-serif" font-size="12">CENTRE FOR CONTEMPORARY VISUAL ARTS</text>
+  <text x="400" y="650" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="10">OCTOBER 14 — NOVEMBER 28</text>
+
+  <text x="120" y="740" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">05 / POSTER DESIGN — MONOLITH EXHIBITION</text>
+  <text x="960" y="740" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="12" letter-spacing="2">POSTER • 2023</text>
+</svg>
