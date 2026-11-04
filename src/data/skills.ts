@@ -44,3 +44,60 @@ export const educationHistory = [
     focus: "Intersection of computational logic, business systems, and visual interface communication",
   },
 ];
+
+export interface PortfolioSkillCategory {
+  title: string;
+  categoryNumber: string;
+  subtitle: string;
+  skills: string[];
+  featured?: boolean;
+}
+
+export const portfolioSkills: PortfolioSkillCategory[] = [
+  {
+    title: "Design",
+    categoryNumber: "01",
+    subtitle: "Visual craftsmanship, interface architecture & creative direction",
+    skills: [
+      "UI/UX Design",
+      "Graphic Design",
+      "Wireframing",
+      "Prototyping",
+      "Visual Design",
+      "Layout & Typography",
+    ],
+  },
+  {
+    title: "Creative Tools",
+    categoryNumber: "02",
+    subtitle: "Core software arsenal for interface prototyping and visual asset creation",
+    skills: [
+      "Figma",
+      "Canva",
+    ],
+    featured: true,
+  },
+  {
+    title: "Technical",
+    categoryNumber: "03",
+    subtitle: "Computational logic, structured data querying & analytical dashboards",
+    skills: [
+      "Python",
+      "SQL",
+      "JavaScript",
+      "Power BI",
+      "Git & GitHub",
+    ],
+  },
+  {
+    title: "Additional Skills",
+    categoryNumber: "04",
+    subtitle: "Analytical thinking, creative problem-solving & multidisciplinary collaboration",
+    skills: [
+      "Data Analysis",
+      "Problem Solving",
+      "Communication",
+      "Teamwork",
+    ],
+  },
+];

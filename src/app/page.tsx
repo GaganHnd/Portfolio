@@ -8,6 +8,8 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSummarySection";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { ExperienceSection } from "@/components/sections/ExperienceSection";
+import { SkillsSection } from "@/components/sections/SkillsSection";
 
 export default function Home() {
   return (
@@ -25,10 +27,16 @@ export default function Home() {
         {/* 3. About Me Section (A Creative Mind With A Technical Perspective) */}
         <AboutSection />
 
+        {/* 4. Experience Section */}
+        <ExperienceSection />
+
+        {/* 5. Skills & Tools Section */}
+        <SkillsSection />
+
         {/* Closing Contact Inquiry Section */}
         <section id="contact" className="space-y-8 sm:space-y-12 pb-8 sm:pb-12" aria-label="Contact Section">
           <SectionHeading
-            index="03"
+            index="05"
             category="GET IN TOUCH"
             title="LET'S CONNECT."
             subtitle="Have an idea or a collaboration in mind? Let's make it real."
