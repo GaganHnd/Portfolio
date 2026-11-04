@@ -9,9 +9,10 @@ interface LightboxModalProps {
   onClose: () => void;
   title: string;
   category: string;
-  year: string;
+  year?: string;
   image: string;
   description?: string;
+  tool?: string;
 }
 
 export function LightboxModal({
@@ -22,6 +23,7 @@ export function LightboxModal({
   year,
   image,
   description,
+  tool,
 }: LightboxModalProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -61,11 +63,16 @@ export function LightboxModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header bar */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-surface-elevated">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between border-b border-white/10 px-4 sm:px-6 py-4 bg-surface-elevated">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-              {category} • {year}
+              {category} {year ? `• ${year}` : ""}
             </span>
+            {tool && (
+              <span className="font-mono text-[10px] text-white bg-white/10 border border-white/20 px-2 py-0.5 uppercase tracking-wider">
+                TOOL: {tool}
+              </span>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -77,8 +84,8 @@ export function LightboxModal({
         </div>
 
         {/* Image viewport */}
-        <div className="relative w-full h-[60vh] bg-black flex items-center justify-center p-4">
-          <div className="relative w-full h-full">
+        <div className="relative w-full h-[65vh] sm:h-[70vh] bg-black/90 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+          <div className="relative w-full h-full max-w-full max-h-full">
             <Image
               src={image}
               alt={title}

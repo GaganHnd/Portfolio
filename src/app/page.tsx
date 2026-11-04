@@ -8,6 +8,7 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSummarySection";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { GraphicDesignSection } from "@/components/sections/GraphicDesignSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 
@@ -27,10 +28,13 @@ export default function Home() {
         {/* 3. About Me Section (A Creative Mind With A Technical Perspective) */}
         <AboutSection />
 
-        {/* 4. Experience Section */}
+        {/* 4. Selected Work: Graphic Design */}
+        <GraphicDesignSection />
+
+        {/* 5. Experience Section */}
         <ExperienceSection />
 
-        {/* 5. Skills & Tools Section */}
+        {/* 6. Skills & Tools Section */}
         <SkillsSection />
 
         {/* Closing Contact Inquiry Section */}
