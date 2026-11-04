@@ -9,6 +9,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSummarySection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { GraphicDesignSection } from "@/components/sections/GraphicDesignSection";
+import { UIUXSection } from "@/components/sections/UIUXSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 
@@ -31,10 +32,13 @@ export default function Home() {
         {/* 4. Selected Work: Graphic Design */}
         <GraphicDesignSection />
 
-        {/* 5. Experience Section */}
+        {/* 5. Selected Work: UI/UX Design */}
+        <UIUXSection />
+
+        {/* 6. Experience Section */}
         <ExperienceSection />
 
-        {/* 6. Skills & Tools Section */}
+        {/* 7. Skills & Tools Section */}
         <SkillsSection />
 
         {/* Closing Contact Inquiry Section */}
