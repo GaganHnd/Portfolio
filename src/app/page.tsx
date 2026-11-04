@@ -29,10 +29,9 @@ export default function Home() {
             <p className="font-mono text-xs md:text-sm tracking-widest uppercase text-neutral-400">
               {personalInfo.title}
             </p>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black tracking-tighter text-white uppercase leading-[0.95]">
+            {/* Oversized Cinematic Typography: GAGAN HANDRAL. */}
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] font-heading font-black tracking-tighter text-white uppercase leading-[0.9] select-none">
               GAGAN
-              <br />
-              <span className="text-neutral-500">SUDHIR</span>
               <br />
               HANDRAL.
             </h1>
@@ -278,13 +277,17 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Phase Review Status Telemetry */}
+        {/* Footer */}
         <footer className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-neutral-500">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span>PHASE 1 &amp; 2 READY FOR REVIEW</span>
+            <span>© {new Date().getFullYear()} {personalInfo.name.toUpperCase()}. ALL RIGHTS RESERVED.</span>
           </div>
-          <div>DEVELOPMENT SERVER ACTIVE: HTTP://LOCALHOST:3000</div>
+          <div className="flex items-center gap-4">
+            <a href="#top" className="hover:text-white transition-colors">
+              BACK TO TOP ↑
+            </a>
+          </div>
         </footer>
       </main>
     </SmoothScrollProvider>

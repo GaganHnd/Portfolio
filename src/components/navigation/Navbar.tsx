@@ -96,12 +96,12 @@ export function Navbar() {
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Brand Wordmark */}
+          {/* Brand Wordmark: GAGAN. */}
           <MagneticWrapper strength={0.2}>
             <Link
               href="/"
               className="text-lg md:text-xl font-heading font-extrabold tracking-tight text-white uppercase focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white group flex items-center gap-2"
-              aria-label="Gagan Sudhir Handral Homepage"
+              aria-label="Gagan Handral Homepage"
             >
               <span>{personalInfo.wordmark}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
@@ -184,7 +184,7 @@ export function Navbar() {
 
           <div className="space-y-4 pt-8 border-t border-white/10">
             <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-              Gagan Sudhir Handral
+              Gagan Handral
             </p>
             <p className="text-xs text-neutral-500 leading-relaxed">
               Graphic Designer / UI/UX Designer

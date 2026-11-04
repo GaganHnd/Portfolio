@@ -28,7 +28,7 @@ export const socialLinks: SocialLink[] = [
 ];
 
 export const personalInfo = {
-  name: "Gagan Sudhir Handral",
+  name: "Gagan Handral",
   wordmark: "GAGAN.",
   title: "GRAPHIC DESIGNER / UI/UX DESIGNER",
   location: "Based in India • Available Worldwide",
@@ -39,6 +39,6 @@ export const personalInfo = {
   aboutPreview:
     "I'm Gagan, a designer interested in creating meaningful visual identities and intuitive digital experiences. I enjoy exploring the intersection of aesthetics, functionality and technology.",
   aboutFull:
-    "I'm Gagan Sudhir Handral, a creative designer with an interest in visual storytelling, digital interfaces and human-centred design.\n\nI enjoy transforming ideas into clear, engaging and functional visual experiences. My approach combines creativity, curiosity and attention to detail.",
+    "I'm Gagan Handral, a creative designer with an interest in visual storytelling, digital interfaces and human-centred design.\n\nI enjoy transforming ideas into clear, engaging and functional visual experiences. My approach combines creativity, curiosity and attention to detail.",
   resumeUrl: "#",
 };

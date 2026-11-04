@@ -32,11 +32,10 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gagan Sudhir Handral — Graphic Designer & UI/UX Designer",
+  title: "Gagan Handral — Graphic Designer & UI/UX Designer",
   description:
-    "Cinematic creative portfolio of Gagan Sudhir Handral. Graphic design, UI/UX interfaces, visual systems, and creative problem solving.",
+    "Cinematic creative portfolio of Gagan Handral. Graphic design, UI/UX interfaces, visual systems, and creative problem solving.",
   keywords: [
-    "Gagan Sudhir Handral",
     "Gagan Handral",
     "Graphic Designer",
     "UI/UX Designer",
@@ -45,10 +44,10 @@ export const metadata: Metadata = {
     "Design Systems",
     "Digital Portfolio",
   ],
-  authors: [{ name: "Gagan Sudhir Handral" }],
-  creator: "Gagan Sudhir Handral",
+  authors: [{ name: "Gagan Handral" }],
+  creator: "Gagan Handral",
   openGraph: {
-    title: "Gagan Sudhir Handral — Graphic Designer & UI/UX Designer",
+    title: "Gagan Handral — Graphic Designer & UI/UX Designer",
     description:
       "Designing meaningful digital experiences through visual storytelling, thoughtful interfaces and creative exploration.",
     type: "website",
