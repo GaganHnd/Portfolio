@@ -1,9 +1,8 @@
 // @ts-nocheck
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './SplashCursor.css';
-
 
 const QUALITY = {
   low: { sim: 64, dye: 512, iterations: 10 },
@@ -256,7 +255,7 @@ const hsv = (h, s, v) => {
 };
 
 export function SplashCursor({
-  colors = ['#ffffff', '#e5e5e5', '#a3a3a3', '#ffffff'],
+  colors = ['#ffffff', '#e8e8e8', '#b0b0b0', '#ffffff'],
   rainbow = true,
   colorSpeed = 1,
   intensity = 1,
@@ -272,28 +271,13 @@ export function SplashCursor({
   intro = true,
   contained = false,
   theme = 'dark',
-  zIndex = 0,
+  zIndex = 1,
   className = '',
   style = {}
 }) {
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
   const [generation, setGeneration] = useState(0);
-  const [isSupported, setIsSupported] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-    const isNoHover = !window.matchMedia('(hover: hover)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (isCoarse || isNoHover || prefersReducedMotion) {
-      setIsSupported(false);
-      return;
-    }
-    setIsSupported(true);
-  }, []);
-
 
   const settings = {
     palette: (Array.isArray(colors) && colors.length ? colors : ['#ffffff']).map(parseColor),
@@ -329,6 +313,14 @@ export function SplashCursor({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
+
+    // Gracefully disable on touch-only devices or if reduced motion is requested
+    if (typeof window !== 'undefined') {
+      const isTouchOnly = window.matchMedia?.('(pointer: coarse)').matches && !window.matchMedia?.('(pointer: fine)').matches;
+      const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      if (isTouchOnly || prefersReduced) return undefined;
+    }
+
     const gl = canvas.getContext('webgl2', {
       alpha: true,
       premultipliedAlpha: true,
@@ -933,8 +925,18 @@ export function SplashCursor({
     };
     const onRestored = () => setGeneration(value => value + 1);
 
+    const onMouseMove = event => {
+      track('mouse', event.clientX, event.clientY);
+    };
+    const onMouseDown = event => {
+      press(event.clientX, event.clientY);
+    };
+
+    window.addEventListener('resize', resize, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('touchstart', onTouchStart, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('touchend', onTouchEnd, { passive: true });
@@ -949,8 +951,11 @@ export function SplashCursor({
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
@@ -961,8 +966,6 @@ export function SplashCursor({
       release();
     };
   }, [generation]);
-
-  if (!isSupported) return null;
 
   return (
     <div

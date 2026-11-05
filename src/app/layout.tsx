@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, Cormorant_Garamond, Space_Mono } from "next/font/google";
+import { SplashCursor } from "@/components/ui/SplashCursor";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -76,7 +77,23 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${cormorant.variable} ${spaceMono.variable} scroll-smooth`}
     >
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-white/20 selection:text-white">
+      <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-white/20 selection:text-white relative">
+        <SplashCursor
+          rainbow={false}
+          size={0.8}
+          force={1}
+          swirl={3}
+          trail={1}
+          clickSplash
+          colorSpeed={1}
+          intensity={1}
+          momentum={1}
+          shading={1}
+          glow={0}
+          quality="high"
+          intro
+          contained={false}
+        />
         {children}
       </body>
     </html>
