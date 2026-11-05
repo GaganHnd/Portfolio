@@ -53,6 +53,25 @@ export function UIUXSection() {
           return Math.max(0, track.scrollWidth - pinWrapper.clientWidth + 60);
         };
 
+        // Smooth entrance for desktop cards
+        gsap.fromTo(
+          ".uiux-desktop-card",
+          { opacity: 0, y: 30, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: EASE.cinematic,
+            scrollTrigger: {
+              trigger: pinWrapper,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+
         // Single dedicated GSAP tween with integrated ScrollTrigger
         gsap.to(track, {
           x: () => -getScrollDistance(),
@@ -161,7 +180,7 @@ export function UIUXSection() {
             <article
               key={`desktop-uiux-${project.id}`}
               onClick={() => setActiveProject(project)}
-              className="w-[820px] xl:w-[920px] 2xl:w-[1020px] flex-shrink-0 border border-white/10 bg-surface hover:border-white/25 transition-all duration-300 group cursor-pointer relative overflow-hidden flex flex-col justify-between shadow-2xl"
+              className="uiux-desktop-card w-[820px] xl:w-[920px] 2xl:w-[1020px] flex-shrink-0 border border-white/10 bg-surface hover:border-white/25 transition-all duration-300 group cursor-pointer relative overflow-hidden flex flex-col justify-between shadow-2xl"
               role="button"
               tabIndex={0}
               aria-label={`Explore ${project.title} UI/UX project`}

@@ -53,6 +53,25 @@ export function GraphicDesignSection() {
           return Math.max(0, track.scrollWidth - pinWrapper.clientWidth + 60);
         };
 
+        // Smooth entrance for desktop cards
+        gsap.fromTo(
+          ".graphic-desktop-card",
+          { opacity: 0, y: 30, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            stagger: 0.1,
+            ease: EASE.cinematic,
+            scrollTrigger: {
+              trigger: pinWrapper,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+
         // Single dedicated GSAP tween with integrated ScrollTrigger
         gsap.to(track, {
           x: () => -getScrollDistance(),
@@ -164,7 +183,7 @@ export function GraphicDesignSection() {
               <article
                 key={`desktop-${project.id}`}
                 onClick={() => setSelectedProject(project)}
-                className="w-[480px] xl:w-[540px] 2xl:w-[580px] flex-shrink-0 border border-white/10 bg-surface flex flex-col justify-between hover:border-white/30 transition-all duration-300 group cursor-pointer relative overflow-hidden shadow-2xl"
+                className="graphic-desktop-card w-[480px] xl:w-[540px] 2xl:w-[580px] flex-shrink-0 border border-white/10 bg-surface flex flex-col justify-between hover:border-white/30 transition-all duration-300 group cursor-pointer relative overflow-hidden shadow-2xl"
                 role="button"
                 tabIndex={0}
                 aria-label={`View ${project.title} details`}

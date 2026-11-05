@@ -74,20 +74,20 @@ export function AboutSection() {
         );
       });
 
-      // Accent words subtle illumination
+      // Accent words progressive scroll-scrub illumination
       gsap.fromTo(
         ".about-lime-word",
-        { opacity: 0.6, color: "#ffffff" },
+        { opacity: 0.5, color: "#ffffff" },
         {
           opacity: 1,
           color: "#B7FF00",
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power2.out",
+          stagger: 0.2,
+          ease: "none",
           scrollTrigger: {
             trigger: narrativeRef.current,
-            start: "top 78%",
-            toggleActions: "play none none none",
+            start: "top 75%",
+            end: "bottom 65%",
+            scrub: 1,
           },
         }
       );

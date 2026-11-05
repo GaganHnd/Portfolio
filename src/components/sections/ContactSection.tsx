@@ -70,6 +70,23 @@ export function ContactSection() {
         { opacity: 1, y: 0, duration: 0.65, stagger: 0.1, ease: "power2.out" },
         "-=0.4"
       );
+
+      // 6. Ambient convergence scrub on the editorial frame
+      gsap.fromTo(
+        ".contact-editorial-frame",
+        { scale: 0.98, borderColor: "rgba(255,255,255,0.1)" },
+        {
+          scale: 1,
+          borderColor: "rgba(183,255,0,0.35)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            end: "bottom 95%",
+            scrub: 1.2,
+          },
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -83,7 +100,7 @@ export function ContactSection() {
       aria-label="Contact Section"
     >
       {/* Editorial Section Frame */}
-      <div className="border border-white/10 bg-surface p-6 sm:p-10 md:p-14 lg:p-16 space-y-10 sm:space-y-12 relative overflow-hidden shadow-2xl">
+      <div className="contact-editorial-frame border border-white/10 bg-surface p-6 sm:p-10 md:p-14 lg:p-16 space-y-10 sm:space-y-12 relative overflow-hidden shadow-2xl transition-all duration-500">
         {/* Background Grid Pattern */}
         <div
           className="absolute inset-0 opacity-5 pointer-events-none"

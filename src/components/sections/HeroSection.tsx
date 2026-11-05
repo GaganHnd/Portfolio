@@ -80,6 +80,42 @@ export function HeroSection() {
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
         "-=0.3"
       );
+
+      // 6. Scroll-linked cinematic perspective on scroll out
+      // Targets the outer title and container blocks with explicit fromTo values,
+      // ensuring zero collision with inner line-reveal transforms and 100% stable return to top.
+      gsap.fromTo(
+        ".hero-main-title",
+        { y: 0, scale: 1, opacity: 1 },
+        {
+          y: 60,
+          scale: 0.96,
+          opacity: 0.45,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        [".hero-tagline-wrap", ".hero-content-grid"],
+        { y: 0, opacity: 1 },
+        {
+          y: -25,
+          opacity: 0.35,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "15% top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -88,7 +124,8 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative pt-6 sm:pt-10 md:pt-16 pb-12 sm:pb-16 md:pb-20 border-b border-white/10"
+      id="hero"
+      className="relative !mt-10 sm:!mt-16 md:!mt-20 pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 border-b border-white/10"
       aria-label="Hero Section"
     >
       {/* Top Meta Telemetry */}
@@ -107,7 +144,7 @@ export function HeroSection() {
 
       {/* Main Monumental Typography (Line-by-line masked reveals) */}
       <div className="space-y-4 sm:space-y-6">
-        <h1 className="text-[2.65rem] xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] font-heading font-black tracking-tighter text-white uppercase leading-[0.9] select-none break-normal">
+        <h1 className="hero-main-title text-[2.65rem] xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem] font-heading font-black tracking-tighter text-white uppercase leading-[0.9] select-none break-normal will-change-transform">
           <span className="block overflow-hidden py-1">
             <span className="hero-title-line block will-change-transform">GAGAN</span>
           </span>
@@ -117,7 +154,7 @@ export function HeroSection() {
         </h1>
 
         {/* Hero Tagline: DESIGNING WITH PURPOSE */}
-        <div className="pt-3 sm:pt-5 relative">
+        <div className="hero-tagline-wrap pt-3 sm:pt-5 relative will-change-transform">
           <div className="hero-tagline-border absolute top-0 left-0 right-0 h-[1px] bg-white/10" />
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <span className="hero-tagline-item font-mono text-xs sm:text-sm text-neutral-500 uppercase tracking-widest">
@@ -131,7 +168,7 @@ export function HeroSection() {
       </div>
 
       {/* Supporting Narrative & Call-to-Actions */}
-      <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-end">
+      <div className="hero-content-grid mt-8 sm:mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-end will-change-transform">
         <div className="hero-narrative md:col-span-8 space-y-4">
           <p className="text-base sm:text-lg md:text-2xl text-neutral-300 font-light leading-relaxed max-w-2xl">
             &ldquo;{personalInfo.heroSupporting}&rdquo;
