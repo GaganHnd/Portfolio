@@ -89,4 +89,5 @@ export interface SocialLink {
   href: string;
   isExternal: boolean;
   handle?: string;
+  isPlaceholder?: boolean;
 }

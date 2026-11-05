@@ -2,33 +2,31 @@ import { SocialLink } from "@/types";
 
 export const socialLinks: SocialLink[] = [
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/gaganhandral",
-    isExternal: true,
-    handle: "in/gaganhandral",
-  },
-  {
     label: "Email",
-    href: "mailto:contact@gaganhandral.design",
+    href: "mailto:handralgagan@gmail.com",
     isExternal: false,
-    handle: "contact@gaganhandral.design",
+    handle: "handralgagan@gmail.com",
+    isPlaceholder: false,
   },
   {
-    label: "Behance / Portfolio",
-    href: "https://behance.net",
+    label: "LinkedIn",
+    href: "",
     isExternal: true,
-    handle: "behance.net/gaganhandral",
+    handle: "Configure Profile URL",
+    isPlaceholder: true,
   },
   {
     label: "GitHub",
-    href: "https://github.com/gaganhandral",
+    href: "",
     isExternal: true,
-    handle: "github.com/gaganhandral",
+    handle: "Configure Profile URL",
+    isPlaceholder: true,
   },
 ];
 
 export const personalInfo = {
   name: "Gagan Handral",
+  email: "handralgagan@gmail.com",
   wordmark: "GAGAN.",
   title: "GRAPHIC DESIGNER · UI/UX DESIGNER",
   tagline: "DESIGNING WITH PURPOSE.",
