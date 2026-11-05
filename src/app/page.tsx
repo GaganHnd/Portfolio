@@ -10,6 +10,7 @@ import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSu
 import { AboutSection } from "@/components/sections/AboutSection";
 import { GraphicDesignSection } from "@/components/sections/GraphicDesignSection";
 import { UIUXSection } from "@/components/sections/UIUXSection";
+import { DigitalProductsSection } from "@/components/sections/DigitalProductsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 
@@ -35,10 +36,13 @@ export default function Home() {
         {/* 5. Selected Work: UI/UX Design */}
         <UIUXSection />
 
-        {/* 6. Experience Section */}
+        {/* 6. Beyond Visuals: Digital Products & Development */}
+        <DigitalProductsSection />
+
+        {/* 7. Experience Section */}
         <ExperienceSection />
 
-        {/* 7. Skills & Tools Section */}
+        {/* 8. Skills & Tools Section */}
         <SkillsSection />
 
         {/* Closing Contact Inquiry Section */}
