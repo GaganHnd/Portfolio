@@ -255,7 +255,7 @@ const hsv = (h, s, v) => {
 };
 
 export function SplashCursor({
-  colors = ['#B7FF00', '#A6E600', '#B7FF00'],
+  colors = ['#FFFFFF', '#FFFFFF', '#B7FF00', '#FFFFFF', '#B7FF00'],
   rainbow = true,
   colorSpeed = 1,
   intensity = 1,
@@ -280,7 +280,7 @@ export function SplashCursor({
   const [generation, setGeneration] = useState(0);
 
   const settings = {
-    palette: (Array.isArray(colors) && colors.length ? colors : ['#B7FF00', '#A6E600', '#B7FF00']).map(parseColor),
+    palette: (Array.isArray(colors) && colors.length ? colors : ['#FFFFFF', '#FFFFFF', '#B7FF00', '#FFFFFF', '#B7FF00']).map(parseColor),
     rainbow,
     colorSpeed: Math.max(0, colorSpeed),
     intensity: Math.max(0, intensity),
@@ -640,6 +640,24 @@ export function SplashCursor({
       const amount = (0.15 * s.intensity * Math.min(dt * 60, 1)) / Math.sqrt(spread);
       const color = inkFor(colorAt(pointer.offset, now), amount);
       splat(pointer.px, pointer.py, pointer.x, pointer.y, dx * push, dy * push, color, radius);
+
+      // Dual-tone accent stream: inject complementary fluid trail along the wake
+      if (length > 0.005) {
+        const accentColor = inkFor(colorAt(pointer.offset + 0.5, now), amount * 0.45);
+        const perpX = -dy * 0.32;
+        const perpY = dx * 0.32;
+        splat(
+          pointer.px + perpX,
+          pointer.py + perpY,
+          pointer.x + perpX,
+          pointer.y + perpY,
+          dx * push * 0.4,
+          dy * push * 0.4,
+          accentColor,
+          radius * 0.75
+        );
+      }
+
       pointer.px = pointer.x;
       pointer.py = pointer.y;
     };
@@ -657,10 +675,18 @@ export function SplashCursor({
       gl.uniform1f(u.seed, seed);
       blit(velocity.write);
       velocity.swap();
-      const offset = Math.random();
+
       const amount = 1.6 * s.intensity;
-      const first = inkFor(colorAt(offset, now), amount);
-      const second = inkFor(colorAt(offset + 0.3, now), amount);
+      const WHITE = [1.0, 1.0, 1.0];
+      const LIME = [0.717647, 1.0, 0.0];
+      // Organic dual-tone splash: alternate white core with lime droplets and lime core with white droplets
+      const isWhiteCore = Math.random() > 0.35;
+      const coreColor = isWhiteCore ? WHITE : LIME;
+      const dropletColor = isWhiteCore ? LIME : WHITE;
+
+      const first = inkFor(coreColor, amount);
+      const second = inkFor(dropletColor, amount * 1.15);
+
       u = use('crown');
       gl.uniform1i(u.uTarget, dye.read.attach(0));
       gl.uniform1f(u.aspectRatio, aspect);
