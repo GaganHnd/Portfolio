@@ -47,25 +47,29 @@ export function UIUXSection() {
         const pinWrapper = pinWrapperRef.current;
         if (!track || !pinWrapper) return;
 
-        const getScrollDistance = () => track.scrollWidth - track.clientWidth;
+        // Correct calculated distance: full content width minus visible container width plus end breathing room
+        const getScrollDistance = () => {
+          if (!track || !pinWrapper) return 0;
+          return Math.max(0, track.scrollWidth - pinWrapper.clientWidth + 60);
+        };
 
-        const scrollTween = gsap.to(track, {
+        // Single dedicated GSAP tween with integrated ScrollTrigger
+        gsap.to(track, {
           x: () => -getScrollDistance(),
           ease: "none",
-        });
-
-        ScrollTrigger.create({
-          trigger: pinWrapper,
-          start: "top top+=75",
-          end: () => `+=${getScrollDistance() + 350}`,
-          pin: true,
-          animation: scrollTween,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (progressBarRef.current) {
-              progressBarRef.current.style.transform = `scaleX(${self.progress})`;
-            }
+          scrollTrigger: {
+            trigger: pinWrapper,
+            start: "top top+=80",
+            end: () => `+=${getScrollDistance()}`,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (progressBarRef.current) {
+                progressBarRef.current.style.transform = `scaleX(${self.progress})`;
+              }
+            },
           },
         });
       });
@@ -93,7 +97,15 @@ export function UIUXSection() {
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    // Refresh after DOM layout is established to ensure exact dimensions
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -143,7 +155,7 @@ export function UIUXSection() {
         {/* Horizontal Track */}
         <div
           ref={trackRef}
-          className="flex flex-row gap-8 items-stretch will-change-transform w-max pr-12 pb-4"
+          className="flex flex-row gap-8 items-stretch will-change-transform w-max pr-16 pb-4"
         >
           {uiuxProjects.map((project, idx) => (
             <article
