@@ -255,7 +255,7 @@ const hsv = (h, s, v) => {
 };
 
 export function SplashCursor({
-  colors = ['#ffffff', '#e8e8e8', '#b0b0b0', '#ffffff'],
+  colors = ['#B7FF00', '#A6E600', '#B7FF00'],
   rainbow = true,
   colorSpeed = 1,
   intensity = 1,
@@ -280,7 +280,7 @@ export function SplashCursor({
   const [generation, setGeneration] = useState(0);
 
   const settings = {
-    palette: (Array.isArray(colors) && colors.length ? colors : ['#ffffff']).map(parseColor),
+    palette: (Array.isArray(colors) && colors.length ? colors : ['#B7FF00', '#A6E600', '#B7FF00']).map(parseColor),
     rainbow,
     colorSpeed: Math.max(0, colorSpeed),
     intensity: Math.max(0, intensity),

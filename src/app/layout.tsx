@@ -79,6 +79,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-white/20 selection:text-white relative">
         <SplashCursor
+          colors={['#B7FF00', '#A6E600', '#B7FF00']}
           rainbow={false}
           size={0.8}
           force={1}
