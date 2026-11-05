@@ -10,23 +10,25 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "LinkedIn",
-    href: "",
+    href: "https://www.linkedin.com/in/gagan-handral",
     isExternal: true,
-    handle: "Configure Profile URL",
-    isPlaceholder: true,
+    handle: "in/gagan-handral",
+    isPlaceholder: false,
   },
   {
     label: "GitHub",
-    href: "",
+    href: "https://github.com/GaganHnd",
     isExternal: true,
-    handle: "Configure Profile URL",
-    isPlaceholder: true,
+    handle: "github.com/GaganHnd",
+    isPlaceholder: false,
   },
 ];
 
 export const personalInfo = {
   name: "Gagan Handral",
   email: "handralgagan@gmail.com",
+  linkedin: "https://www.linkedin.com/in/gagan-handral",
+  github: "https://github.com/GaganHnd",
   wordmark: "GAGAN.",
   title: "GRAPHIC DESIGNER · UI/UX DESIGNER",
   tagline: "DESIGNING WITH PURPOSE.",

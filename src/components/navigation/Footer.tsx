@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { personalInfo } from "@/data/social-links";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
+import { LinkedInIcon, GitHubIcon } from "@/components/ui/Icons";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -61,11 +62,38 @@ export function Footer() {
             </ul>
           </nav>
 
-          {/* Back to Top Button */}
-          <div>
+          {/* Social Profiles & Back to Top Row */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* LinkedIn Icon Link */}
+            <a
+              href={personalInfo.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors border border-white/10 hover:border-white/30 px-3 py-2 bg-surface-elevated hover:bg-white/5"
+              aria-label="Visit Gagan Handral's LinkedIn Profile (opens in new tab)"
+            >
+              <LinkedInIcon className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors" />
+              <span>LINKEDIN</span>
+              <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+
+            {/* GitHub Icon Link */}
+            <a
+              href={personalInfo.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors border border-white/10 hover:border-white/30 px-3 py-2 bg-surface-elevated hover:bg-white/5"
+              aria-label="Visit Gagan Handral's GitHub Profile (opens in new tab)"
+            >
+              <GitHubIcon className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors" />
+              <span>GITHUB</span>
+              <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+
+            {/* Back to Top Button */}
             <button
               onClick={handleScrollToTop}
-              className="group inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors border border-white/10 hover:border-white/30 px-3.5 py-2 bg-surface-elevated"
+              className="group inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors border border-white/10 hover:border-white/30 px-3.5 py-2 bg-surface-elevated hover:bg-white/5"
               aria-label="Scroll back to top"
             >
               <span>BACK TO TOP</span>
@@ -85,6 +113,28 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center gap-4 text-neutral-500">
+          <a
+            href={personalInfo.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors inline-flex items-center gap-1.5"
+            aria-label="LinkedIn profile"
+          >
+            <LinkedInIcon className="w-3 h-3" />
+            <span>LINKEDIN</span>
+          </a>
+          <span className="text-neutral-700">•</span>
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors inline-flex items-center gap-1.5"
+            aria-label="GitHub profile"
+          >
+            <GitHubIcon className="w-3 h-3" />
+            <span>GITHUB</span>
+          </a>
+          <span className="text-neutral-700">•</span>
           <span>FIGMA · CANVA</span>
           <span className="text-neutral-700">•</span>
           <span>DESIGNING WITH PURPOSE</span>

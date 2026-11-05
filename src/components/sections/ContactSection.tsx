@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticWrapper } from "@/components/ui/MagneticWrapper";
 import { registerGSAP, EASE } from "@/lib/animations";
 import { Mail, ArrowUpRight, Sparkles, MessageSquare } from "lucide-react";
+import { LinkedInIcon, GitHubIcon } from "@/components/ui/Icons";
 
 export function ContactSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -123,33 +124,45 @@ export function ContactSection() {
               </a>
             </div>
 
-            {/* Social Channels with Verified Placeholder Indicators */}
+            {/* External Professional Profiles */}
             <div className="pt-2">
               <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest block mb-2.5">
                 EXTERNAL PROFILES
               </span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
-                {/* LinkedIn Placeholder */}
-                <div className="p-3 border border-white/10 bg-surface-elevated flex items-center justify-between">
-                  <span className="text-neutral-300">LinkedIn</span>
-                  <span className="text-[10px] text-neutral-500 border border-white/10 bg-white/5 px-2 py-0.5 uppercase tracking-wider">
-                    Profile URL Pending
-                  </span>
-                </div>
+                {/* LinkedIn Profile */}
+                <a
+                  href={personalInfo.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 border border-white/10 bg-surface-elevated hover:border-white/30 hover:bg-white/5 transition-all duration-300 flex items-center justify-between group"
+                  aria-label="LinkedIn profile of Gagan Handral (opens in new tab)"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <LinkedInIcon className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors flex-shrink-0" />
+                    <span className="text-neutral-200 group-hover:text-white transition-colors font-medium">LinkedIn</span>
+                    <span className="text-[11px] text-neutral-500 truncate">in/gagan-handral</span>
+                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0 ml-2" />
+                </a>
 
-                {/* GitHub Placeholder */}
-                <div className="p-3 border border-white/10 bg-surface-elevated flex items-center justify-between">
-                  <span className="text-neutral-300">GitHub</span>
-                  <span className="text-[10px] text-neutral-500 border border-white/10 bg-white/5 px-2 py-0.5 uppercase tracking-wider">
-                    Profile URL Pending
-                  </span>
-                </div>
+                {/* GitHub Profile */}
+                <a
+                  href={personalInfo.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 border border-white/10 bg-surface-elevated hover:border-white/30 hover:bg-white/5 transition-all duration-300 flex items-center justify-between group"
+                  aria-label="GitHub profile of Gagan Handral (opens in new tab)"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <GitHubIcon className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors flex-shrink-0" />
+                    <span className="text-neutral-200 group-hover:text-white transition-colors font-medium">GitHub</span>
+                    <span className="text-[11px] text-neutral-500 truncate">GaganHnd</span>
+                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0 ml-2" />
+                </a>
               </div>
-
-              <p className="font-mono text-[10px] text-neutral-500 mt-2">
-                * Social profile links will activate once permanent account URLs are configured.
-              </p>
             </div>
           </div>
         </div>
