@@ -34,7 +34,8 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     const { gsap, ScrollTrigger } = registerGSAP();
 
     // Configure high-end agency Lenis smooth scroll
-    const lenis = new Lenis({
+    const LenisConstructor = (Lenis as any).default || Lenis;
+    const lenis = new LenisConstructor({
       duration: 1.15,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
