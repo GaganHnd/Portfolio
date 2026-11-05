@@ -49,7 +49,7 @@ export const graphicDesignProjects: GraphicDesignProject[] = [
     category: "Logo & Visual Identity",
     tool: "Figma",
     description: "An original geometric logo designed for the Udbhava Club.",
-    image: "/images/graphic-design/udbhava-club-logo.jpg",
+    image: "/images/graphic-design/udbhava-club-logo.png",
     aspectRatio: "square",
     year: "2024",
   },

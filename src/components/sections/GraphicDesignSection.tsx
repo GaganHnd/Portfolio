@@ -196,30 +196,19 @@ export function GraphicDesignSection() {
 
                 {/* Aspect-Preserving Image Frame (Uncropped!) */}
                 <div className="relative w-full bg-[#030303] flex items-center justify-center p-6 h-[440px] xl:h-[480px] overflow-hidden">
-                  {isLogo && (
-                    <div
-                      className="absolute inset-0 opacity-15 pointer-events-none"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px)",
-                        backgroundSize: "28px 28px",
-                      }}
-                    />
-                  )}
-
                   <div
                     className={`graphic-image-inner relative w-full ${
                       isLogo
                         ? "max-w-[340px] aspect-square"
-                        : "max-w-[340px] xl:max-w-[370px] aspect-[723/1024]"
-                    } shadow-2xl transition-transform duration-500 ease-out group-hover:scale-[1.025]`}
+                        : "max-w-[340px] xl:max-w-[370px] aspect-[723/1024] shadow-2xl"
+                    } transition-transform duration-500 ease-out group-hover:scale-[1.025]`}
                   >
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
                       className={`object-contain ${
-                        isLogo ? "p-4 bg-white/5 border border-white/10" : "border border-white/10"
+                        isLogo ? "" : "border border-white/10"
                       }`}
                       sizes="(max-width: 1280px) 500px, 600px"
                       priority={idx < 2}
@@ -302,16 +291,16 @@ export function GraphicDesignSection() {
                 <div
                   className={`relative w-full ${
                     isLogo
-                      ? "max-w-[300px] sm:max-w-[360px] aspect-square"
-                      : "max-w-[320px] sm:max-w-[380px] aspect-[723/1024]"
-                  } shadow-2xl`}
+                      ? "max-w-[280px] sm:max-w-[340px] aspect-square"
+                      : "max-w-[320px] sm:max-w-[380px] aspect-[723/1024] shadow-2xl"
+                  }`}
                 >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className={`object-contain ${
-                      isLogo ? "p-4 bg-white/5 border border-white/10" : "border border-white/10"
+                      isLogo ? "" : "border border-white/10"
                     }`}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
