@@ -14,6 +14,8 @@ export function registerGSAP() {
 export const EASE = {
   cinematic: "power3.out",
   editorial: "expo.out",
+  power4: "power4.out",
+  expo: "expo.out",
   smooth: "power2.inOut",
   elastic: "elastic.out(1, 0.75)",
 };
@@ -22,5 +24,5 @@ export const DURATION = {
   fast: 0.4,
   base: 0.8,
   slow: 1.2,
-  cinematic: 1.6,
+  cinematic: 1.5,
 };

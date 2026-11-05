@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${cormorant.variable} ${spaceMono.variable} scroll-smooth`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${cormorant.variable} ${spaceMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-white/20 selection:text-white relative">
         <SplashCursor

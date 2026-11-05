@@ -6,6 +6,7 @@ import { personalInfo } from "@/data/social-links";
 import { MagneticWrapper } from "@/components/ui/MagneticWrapper";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLenis } from "@/components/animations/SmoothScrollProvider";
 
 interface NavItem {
   label: string;
@@ -22,6 +23,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const { lenis, scrollTo } = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,16 +64,19 @@ export function Navbar() {
 
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
 
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, lenis]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#")) {
@@ -79,7 +84,7 @@ export function Navbar() {
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
         e.preventDefault();
-        targetElement.scrollIntoView({ behavior: "smooth" });
+        scrollTo(targetElement, { offset: -70, duration: 1.25 });
         setMobileMenuOpen(false);
       }
     }

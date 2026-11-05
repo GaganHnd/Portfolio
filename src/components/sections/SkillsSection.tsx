@@ -3,18 +3,12 @@
 import React, { useEffect, useRef } from "react";
 import { portfolioSkills } from "@/data/skills";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Divider } from "@/components/ui/Divider";
 import { registerGSAP, EASE } from "@/lib/animations";
 import {
   Palette,
   Sparkles,
-  Terminal,
   Compass,
-  Layers,
-  CheckCircle2,
   Code2,
-  Workflow,
-  Cpu,
 } from "lucide-react";
 
 export function SkillsSection() {
@@ -24,21 +18,57 @@ export function SkillsSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || !containerRef.current) return;
 
-    const { gsap, ScrollTrigger } = registerGSAP();
+    const { gsap } = registerGSAP();
 
     const ctx = gsap.context(() => {
+      // 1. Heading masked reveal
+      gsap.fromTo(
+        ".skills-heading .section-heading-title",
+        { yPercent: 110, opacity: 0 },
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 1,
+          ease: EASE.power4,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // 2. 4 Skill category cards staggered reveal
       gsap.fromTo(
         ".skill-card",
-        { opacity: 0.85, y: 24 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.85,
           stagger: 0.12,
           ease: EASE.cinematic,
           scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 85%",
+            trigger: ".skills-grid",
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // 3. Staggered reveal of internal tags inside cards
+      gsap.fromTo(
+        ".skill-tag-item",
+        { opacity: 0, scale: 0.95 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.03,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".skills-grid",
+            start: "top 78%",
             toggleActions: "play none none none",
           },
         }
@@ -53,7 +83,7 @@ export function SkillsSection() {
       case "01":
         return <Palette className="w-4 h-4 text-white" />;
       case "02":
-        return <Sparkles className="w-4 h-4 text-emerald-400" />;
+        return <Sparkles className="w-4 h-4 text-[#B7FF00]" />;
       case "03":
         return <Code2 className="w-4 h-4 text-neutral-300" />;
       case "04":
@@ -70,6 +100,7 @@ export function SkillsSection() {
       aria-label="Skills & Tools"
     >
       <SectionHeading
+        className="skills-heading"
         index="04"
         category="CAPABILITIES &amp; TOOLKIT"
         title="SKILLS &amp; TOOLS."
@@ -77,7 +108,7 @@ export function SkillsSection() {
       />
 
       {/* 2x2 Structured Grid for the 4 Skill Groups */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      <div className="skills-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {portfolioSkills.map((group) => {
           const isCreativeTools = group.title === "Creative Tools";
 
@@ -96,7 +127,7 @@ export function SkillsSection() {
                       {group.categoryNumber} / DISCIPLINE
                     </span>
                     {isCreativeTools && (
-                      <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5">
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#B7FF00] border border-[#B7FF00]/30 bg-[#B7FF00]/10 px-2 py-0.5">
                         CORE ARSENAL
                       </span>
                     )}
@@ -118,13 +149,13 @@ export function SkillsSection() {
                     {group.skills.map((tool) => (
                       <div
                         key={tool}
-                        className="p-4 sm:p-5 border border-white/15 bg-white/5 hover:border-white/30 transition-all"
+                        className="skill-tag-item p-4 sm:p-5 border border-white/15 bg-white/5 hover:border-[#B7FF00]/40 transition-all"
                       >
                         <div className="flex items-center justify-between mb-3">
-                          <span className="font-mono text-[10px] text-emerald-400 uppercase tracking-wider">
+                          <span className="font-mono text-[10px] text-[#B7FF00] uppercase tracking-wider">
                             VERIFIED TOOL
                           </span>
-                          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                          <span className="w-2 h-2 rounded-full bg-[#B7FF00]" />
                         </div>
                         <h4 className="font-heading font-bold text-xl sm:text-2xl text-white uppercase tracking-tight">
                           {tool}
@@ -142,7 +173,7 @@ export function SkillsSection() {
                     {group.skills.map((skill, sIdx) => (
                       <div
                         key={skill}
-                        className="group/item flex items-center gap-2 font-mono text-xs sm:text-sm text-neutral-300 bg-surface-elevated border border-white/10 px-3.5 py-2 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all cursor-default"
+                        className="skill-tag-item group/item flex items-center gap-2 font-mono text-xs sm:text-sm text-neutral-300 bg-surface-elevated border border-white/10 px-3.5 py-2 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all cursor-default"
                       >
                         <span className="font-mono text-[10px] text-neutral-500 group-hover/item:text-neutral-400 transition-colors">
                           0{sIdx + 1}

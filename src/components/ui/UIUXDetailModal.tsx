@@ -4,6 +4,7 @@ import React, { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { UIUXProject } from "@/data/ui-ux";
 import { X, Layers, Layout, ExternalLink, CheckCircle2, Eye } from "lucide-react";
+import { useLenis } from "@/components/animations/SmoothScrollProvider";
 
 interface UIUXDetailModalProps {
   project: UIUXProject | null;
@@ -11,6 +12,8 @@ interface UIUXDetailModalProps {
 }
 
 export function UIUXDetailModal({ project, onClose }: UIUXDetailModalProps) {
+  const { lenis } = useLenis();
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -21,16 +24,19 @@ export function UIUXDetailModal({ project, onClose }: UIUXDetailModalProps) {
   useEffect(() => {
     if (project) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
 
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [project, handleKeyDown]);
+  }, [project, handleKeyDown, lenis]);
 
   if (!project) return null;
 

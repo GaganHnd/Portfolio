@@ -3,6 +3,7 @@
 import React, { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { useLenis } from "@/components/animations/SmoothScrollProvider";
 
 interface LightboxModalProps {
   isOpen: boolean;
@@ -34,19 +35,24 @@ export function LightboxModal({
     [onClose]
   );
 
+  const { lenis } = useLenis();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
 
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, handleKeyDown]);
+  }, [isOpen, handleKeyDown, lenis]);
 
   if (!isOpen) return null;
 

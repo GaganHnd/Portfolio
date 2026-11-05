@@ -7,15 +7,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { registerGSAP, EASE } from "@/lib/animations";
 import {
   Bot,
-  Cpu,
-  Sparkles,
-  Layers,
-  CheckCircle2,
-  Code2,
   Terminal,
-  Mic,
-  Database,
-  Users2,
+  Code2,
   BookOpen,
 } from "lucide-react";
 
@@ -26,25 +19,64 @@ export function DigitalProductsSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || !containerRef.current) return;
 
-    const { gsap, ScrollTrigger } = registerGSAP();
+    const { gsap } = registerGSAP();
 
     const ctx = gsap.context(() => {
+      // 1. Heading masked reveal
       gsap.fromTo(
-        ".digital-product-card",
-        { opacity: 0.85, y: 30 },
+        ".digital-heading .section-heading-title",
+        { yPercent: 110, opacity: 0 },
         {
+          yPercent: 0,
           opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.18,
-          ease: EASE.cinematic,
+          duration: 1,
+          ease: EASE.power4,
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 80%",
+            start: "top 88%",
             toggleActions: "play none none none",
           },
         }
       );
+
+      // 2. Staggered project cards reveal
+      const cards = gsap.utils.toArray<HTMLElement>(".digital-product-card");
+      cards.forEach((card) => {
+        const imageFrame = card.querySelector(".digital-image-frame");
+        const features = card.querySelectorAll(".digital-feature-item");
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        });
+
+        tl.fromTo(
+          card,
+          { opacity: 0, y: 35 },
+          { opacity: 1, y: 0, duration: 0.85, ease: EASE.cinematic }
+        );
+
+        if (imageFrame) {
+          tl.fromTo(
+            imageFrame,
+            { scale: 0.97, opacity: 0.9 },
+            { scale: 1, opacity: 1, duration: 0.7, ease: "power2.out" },
+            "-=0.5"
+          );
+        }
+
+        if (features.length > 0) {
+          tl.fromTo(
+            features,
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power2.out" },
+            "-=0.4"
+          );
+        }
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -61,6 +93,7 @@ export function DigitalProductsSection() {
       aria-label="Digital Products & Development"
     >
       <SectionHeading
+        className="digital-heading"
         category="BEYOND VISUALS"
         title="DIGITAL PRODUCTS &amp; DEVELOPMENT."
         subtitle="Bridging visual design sensibility with technical engineering: AI-powered applications, voice assistance pipelines, and modern full-stack platforms."
@@ -81,8 +114,8 @@ export function DigitalProductsSection() {
               <span className="hidden sm:inline-block font-mono text-xs text-neutral-600">
                 •
               </span>
-              <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 uppercase tracking-wider flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="font-mono text-[10px] text-[#B7FF00] bg-[#B7FF00]/10 border border-[#B7FF00]/30 px-2 py-0.5 uppercase tracking-wider flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00] animate-pulse" />
                 INTELLIGENT VOICE &amp; CHAT
               </span>
             </div>
@@ -110,7 +143,7 @@ export function DigitalProductsSection() {
 
             {/* Architecture Preview Frame */}
             <div className="space-y-2">
-              <div className="relative w-full aspect-[16/10] sm:max-h-[500px] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center">
+              <div className="digital-image-frame relative w-full aspect-[16/10] sm:max-h-[500px] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center transition-transform duration-500">
                 <Image
                   src={echoProject.image}
                   alt={echoProject.imageAlt}
@@ -133,7 +166,7 @@ export function DigitalProductsSection() {
               {/* Left: Key Features (7 cols) */}
               <div className="lg:col-span-7 space-y-4">
                 <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase tracking-wider pb-2 border-b border-white/10">
-                  <Bot className="w-4 h-4 text-emerald-400" />
+                  <Bot className="w-4 h-4 text-[#B7FF00]" />
                   <span>Documented Key Capabilities &amp; Engineering</span>
                 </div>
 
@@ -141,7 +174,7 @@ export function DigitalProductsSection() {
                   {echoProject.keyFeatures.map((feature, fIdx) => (
                     <li
                       key={fIdx}
-                      className="flex items-start gap-3 text-neutral-300 font-light text-sm sm:text-base leading-relaxed"
+                      className="digital-feature-item flex items-start gap-3 text-neutral-300 font-light text-sm sm:text-base leading-relaxed"
                     >
                       <span className="font-mono text-[10px] text-neutral-500 mt-1 flex-shrink-0">
                         [0{fIdx + 1}]
@@ -163,7 +196,7 @@ export function DigitalProductsSection() {
                   {echoProject.technology.map((tech) => (
                     <span
                       key={tech}
-                      className="font-mono text-xs text-neutral-200 bg-surface-elevated border border-white/10 px-3 py-1.5 hover:border-white/30 transition-colors"
+                      className="digital-feature-item font-mono text-xs text-neutral-200 bg-surface-elevated border border-white/10 px-3 py-1.5 hover:border-white/30 transition-colors"
                     >
                       {tech}
                     </span>
@@ -229,8 +262,8 @@ export function DigitalProductsSection() {
                   </span>
                   <ul className="space-y-2 pt-1 font-mono text-xs text-neutral-300">
                     {studyAssistantProject.keyFeatures.map((feat) => (
-                      <li key={feat} className="flex items-center gap-2.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" />
+                      <li key={feat} className="digital-feature-item flex items-center gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00]" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -246,7 +279,7 @@ export function DigitalProductsSection() {
 
             {/* Right Wireframe Preview Column (6 cols) */}
             <div className="lg:col-span-6 space-y-2 flex flex-col justify-center">
-              <div className="relative w-full aspect-[16/10] sm:max-h-[380px] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center">
+              <div className="digital-image-frame relative w-full aspect-[16/10] sm:max-h-[380px] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center">
                 <Image
                   src={studyAssistantProject.image}
                   alt={studyAssistantProject.imageAlt}
