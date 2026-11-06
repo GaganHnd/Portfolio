@@ -46,7 +46,7 @@ export const digitalProducts: DigitalProduct[] = [
   {
     id: "ai-study-assistant",
     number: "02",
-    title: "AI Study Assistant",
+    title: "Mind Mentor – An AI Study Assistant",
     category: "AI Application",
     description:
       "An AI-powered learning assistant designed to help students organise their studies through personalised study plans, learning resource recommendations and progress tracking.",
@@ -63,8 +63,8 @@ export const digitalProducts: DigitalProduct[] = [
       "Resource Recommendation Engine",
       "Progress Tracking Analytics",
     ],
-    image: "/images/digital-products/ai-study-assistant.jpg",
-    imageAlt: "AI Study Assistant – Your Personalized Learning Companion",
-    placeholderPath: "public/images/digital-products/ai-study-assistant.jpg",
+    image: "/images/digital-products/mind-mentor.jpg",
+    imageAlt: "Mind Mentor – An AI Study Assistant",
+    placeholderPath: "public/images/digital-products/mind-mentor.jpg",
   },
 ];

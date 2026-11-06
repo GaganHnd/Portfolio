@@ -4,13 +4,9 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { digitalProducts } from "@/data/digital-products";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { TiltImage } from "@/components/ui/TiltImage";
 import { registerGSAP, EASE } from "@/lib/animations";
-import {
-  Bot,
-  Terminal,
-  Code2,
-  BookOpen,
-} from "lucide-react";
+import { Bot, BookOpen, Code2, Terminal } from "lucide-react";
 
 export function DigitalProductsSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -19,7 +15,7 @@ export function DigitalProductsSection() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || !containerRef.current) return;
 
-    const { gsap } = registerGSAP();
+    const { gsap, ScrollTrigger } = registerGSAP();
 
     const ctx = gsap.context(() => {
       // 0. Visual transition thread connector
@@ -51,57 +47,42 @@ export function DigitalProductsSection() {
         }
       );
 
-      // 2. Staggered project cards reveal
-      const cards = gsap.utils.toArray<HTMLElement>(".digital-product-card");
-      cards.forEach((card) => {
-        const imageFrame = card.querySelector(".digital-image-frame");
-        const features = card.querySelectorAll(".digital-feature-item");
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        });
-
-        tl.fromTo(
-          card,
+      // 2. Subtle scroll-reveal for each vertically stacked alternating row
+      const rows = gsap.utils.toArray<HTMLElement>(".digital-project-row");
+      rows.forEach((row) => {
+        gsap.fromTo(
+          row,
           { opacity: 0, y: 35 },
-          { opacity: 1, y: 0, duration: 0.85, ease: EASE.cinematic }
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.85,
+            ease: EASE.cinematic,
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
         );
-
-        if (imageFrame) {
-          tl.fromTo(
-            imageFrame,
-            { scale: 0.97, opacity: 0.9 },
-            { scale: 1, opacity: 1, duration: 0.7, ease: "power2.out" },
-            "-=0.5"
-          );
-        }
-
-        if (features.length > 0) {
-          tl.fromTo(
-            features,
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power2.out" },
-            "-=0.4"
-          );
-        }
       });
     }, containerRef);
 
-    return () => ctx.revert();
-  }, []);
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
 
-  const echoProject = digitalProducts.find((p) => p.id === "echo")!;
-  const studyAssistantProject = digitalProducts.find((p) => p.id === "ai-study-assistant")!;
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
+  }, []);
 
   return (
     <section
       ref={containerRef}
       id="digital-products"
-      className="space-y-8 sm:space-y-12"
+      className="space-y-12 sm:space-y-16 relative"
       aria-label="Digital Products & Development"
     >
       {/* Visual Transition Thread Connector */}
@@ -111,249 +92,167 @@ export function DigitalProductsSection() {
 
       <SectionHeading
         className="digital-heading"
+        index="03"
         category="BEYOND VISUALS"
         title="DIGITAL PRODUCTS &amp; DEVELOPMENT."
         subtitle="Bridging visual design sensibility with technical engineering: AI-powered applications, voice assistance pipelines, and modern full-stack platforms."
       />
 
-      <div className="space-y-10 sm:space-y-12 md:space-y-16">
-        {/* 1. PRIMARY FEATURED PROJECT: ECHO */}
-        <article className="digital-product-card border border-white/15 bg-surface relative overflow-hidden shadow-2xl">
-          {/* Featured Top Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-6 sm:px-8 md:px-10 py-4 bg-surface-elevated">
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <span className="font-mono text-xs text-white font-bold tracking-widest">
-                [01 / FEATURED AI PRODUCT]
-              </span>
-              <span className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest">
-                {echoProject.category}
-              </span>
-              <span className="hidden sm:inline-block font-mono text-xs text-neutral-600">
-                •
-              </span>
-              <span className="font-mono text-[10px] text-[#B7FF00] bg-[#B7FF00]/10 border border-[#B7FF00]/30 px-2 py-0.5 uppercase tracking-wider flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00] animate-pulse" />
-                INTELLIGENT VOICE &amp; CHAT
-              </span>
-            </div>
+      {/* =========================================================================
+          VERTICALLY STACKED ALTERNATING PROJECT SHOWCASE
+          Desktop: Alternating Left-Right
+          Mobile & Tablet: Image stacked consistently on top of description
+      ========================================================================== */}
+      <div className="space-y-20 sm:space-y-28 lg:space-y-36">
+        {digitalProducts.map((product, idx) => {
+          const isEven = idx % 2 === 0;
+          const productNum = product.number || `0${idx + 1}`;
+          const isEcho = product.id === "echo";
 
-            <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500">
-              <Terminal className="w-3.5 h-3.5 text-neutral-400" />
-              <span>FULL-STACK DEVELOPMENT</span>
-            </div>
-          </div>
-
-          {/* Main Echo Body Grid */}
-          <div className="p-6 sm:p-8 md:p-10 lg:p-12 space-y-8 sm:space-y-10">
-            {/* Title & Overview */}
-            <div className="space-y-3 max-w-4xl">
-              <span className="font-mono text-[10px] sm:text-xs text-neutral-500 uppercase tracking-widest block">
-                FLAGSHIP AI ARCHITECTURE
-              </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white uppercase tracking-tight leading-[1.05]">
-                {echoProject.title}
-              </h3>
-              <p className="text-base sm:text-lg md:text-xl text-neutral-300 font-light leading-relaxed pt-1">
-                {echoProject.description}
-              </p>
-            </div>
-
-            {/* Architecture Preview Frame */}
-            <div className="space-y-2">
-              <div className="digital-image-frame group/img relative w-full aspect-[2/1] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center transition-all duration-500 shadow-2xl">
-                <Image
-                  src={echoProject.image}
-                  alt={echoProject.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-[1.025]"
-                  sizes="(max-width: 1400px) 100vw, 1400px"
-                  priority
-                />
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-neutral-500 px-1">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00]" />
-                  <span>ECHO PLATFORM ARCHITECTURE &amp; VOICE AI INTERFACE</span>
-                </span>
-                <span className="text-neutral-400">VERIFIED SYSTEM OVERVIEW</span>
-              </div>
-            </div>
-
-            {/* Echo Features & Technology Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-6 border-t border-white/10">
-              {/* Left: Key Features (7 cols) */}
-              <div className="lg:col-span-7 space-y-4">
-                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase tracking-wider pb-2 border-b border-white/10">
-                  <Bot className="w-4 h-4 text-[#B7FF00]" />
-                  <span>Documented Key Capabilities &amp; Engineering</span>
-                </div>
-
-                <ul className="space-y-3 pt-1">
-                  {echoProject.keyFeatures.map((feature, fIdx) => (
-                    <li
-                      key={fIdx}
-                      className="digital-feature-item flex items-start gap-3 text-neutral-300 font-light text-sm sm:text-base leading-relaxed"
-                    >
-                      <span className="font-mono text-[10px] text-neutral-500 mt-1 flex-shrink-0">
-                        [0{fIdx + 1}]
+          return (
+            <article
+              key={product.id}
+              className="digital-project-row grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20 items-center"
+            >
+              {/* IMAGE / BANNER CONTAINER: Left on Even, Right on Odd (Desktop) | Top on Mobile */}
+              <div
+                className={`w-full ${
+                  isEven
+                    ? "order-1 lg:order-1 lg:col-span-7"
+                    : "order-1 lg:order-2 lg:col-span-7"
+                }`}
+              >
+                <div className="group relative border border-white/10 hover:border-white/30 bg-[#030303] transition-all duration-300 overflow-hidden shadow-2xl block">
+                  {/* Top Header Telemetry */}
+                  <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 bg-surface-elevated/70">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00] animate-pulse" />
+                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">
+                        [{productNum}] {product.category}
                       </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-400">
+                      {isEcho ? (
+                        <Bot className="w-3.5 h-3.5 text-[#B7FF00]" />
+                      ) : (
+                        <BookOpen className="w-3.5 h-3.5 text-[#B7FF00]" />
+                      )}
+                      <span className="uppercase tracking-wider">
+                        {isEcho ? "VOICE & CHAT ARCHITECTURE" : "MIND MENTOR PLATFORM"}
+                      </span>
+                    </div>
+                  </div>
 
-              {/* Right: Technology Stack (5 cols) */}
-              <div className="lg:col-span-5 space-y-4 lg:border-l lg:border-white/10 lg:pl-8">
-                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase tracking-wider pb-2 border-b border-white/10">
-                  <Code2 className="w-4 h-4 text-white" />
-                  <span>Verified Technology Stack</span>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {echoProject.technology.map((tech) => (
-                    <span
-                      key={tech}
-                      className="digital-feature-item font-mono text-xs text-neutral-200 bg-surface-elevated border border-white/10 px-3 py-1.5 hover:border-white/30 transition-colors"
+                  {/* Banner Frame with 3D Tilt - Uncropped 16:9 aspect ratio */}
+                  <div className="relative w-full bg-[#020202] overflow-hidden flex items-center justify-center p-2 sm:p-3">
+                    <TiltImage
+                      className="w-full aspect-[16/9] overflow-hidden"
+                      maxTilt={3.5}
                     >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={product.image}
+                          alt={product.imageAlt}
+                          fill
+                          className="object-contain"
+                          sizes="(max-width: 1024px) 100vw, 55vw"
+                          priority={idx === 0}
+                        />
+                      </div>
+                    </TiltImage>
+                  </div>
 
-                <div className="pt-4">
-                  <div className="p-4 border border-white/10 bg-white/5 space-y-1.5">
-                    <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider block">
-                      SYSTEM HIGHLIGHT
+                  {/* Card Bottom Meta Strip */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-neutral-500 px-5 py-2.5 border-t border-white/10 bg-surface-elevated/40">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full bg-[#B7FF00]" />
+                      <span>{isEcho ? "ECHO PLATFORM ARCHITECTURE & VOICE AI" : "MIND MENTOR AI LEARNING PLATFORM"}</span>
                     </span>
-                    <p className="text-xs text-neutral-400 leading-relaxed font-mono">
-                      End-to-end integration combining Convex real-time state, VAPI voice AI synthesis, and secure AWS credentials management.
-                    </p>
+                    <span className="text-neutral-400 uppercase">SYSTEM VERIFIED</span>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </article>
 
-        {/* 2. SECONDARY PROJECT: AI STUDY ASSISTANT */}
-        <article className="digital-product-card border border-white/15 bg-surface relative overflow-hidden shadow-2xl">
-          {/* Top Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-6 sm:px-8 md:px-10 py-4 bg-surface-elevated">
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <span className="font-mono text-xs text-white font-bold tracking-widest">
-                [02 / SECONDARY AI APPLICATION]
-              </span>
-              <span className="font-mono text-[10px] sm:text-xs text-neutral-400 uppercase tracking-widest">
-                {studyAssistantProject.category}
-              </span>
-              <span className="hidden sm:inline-block font-mono text-xs text-neutral-600">
-                •
-              </span>
-              <span className="font-mono text-[10px] text-[#B7FF00] bg-[#B7FF00]/10 border border-[#B7FF00]/30 px-2 py-0.5 uppercase tracking-wider flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00] animate-pulse" />
-                LEARNING ASSISTANT
-              </span>
-            </div>
+              {/* DESCRIPTION CONTAINER: Right on Even, Left on Odd (Desktop) | Bottom on Mobile */}
+              <div
+                className={`w-full space-y-6 ${
+                  isEven
+                    ? "order-2 lg:order-2 lg:col-span-5"
+                    : "order-2 lg:order-1 lg:col-span-5"
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-[#B7FF00] font-semibold tracking-widest">
+                      PRODUCT [{productNum}]
+                    </span>
+                    <span className="text-neutral-600 font-mono text-xs">•</span>
+                    <span className="font-mono text-xs text-neutral-400 uppercase tracking-wider">
+                      {product.category}
+                    </span>
+                  </div>
 
-            <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500">
-              <BookOpen className="w-3.5 h-3.5 text-neutral-400" />
-              <span>EDUCATION &amp; WORKFLOW INTELLIGENCE</span>
-            </div>
-          </div>
+                  <h3 className="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-white uppercase tracking-tight leading-none">
+                    {product.title}
+                  </h3>
 
-          {/* Main Body Grid */}
-          <div className="p-6 sm:p-8 md:p-10 lg:p-12 space-y-8 sm:space-y-10">
-            {/* Title & Overview */}
-            <div className="space-y-3 max-w-4xl">
-              <span className="font-mono text-[10px] sm:text-xs text-neutral-500 uppercase tracking-widest block">
-                APPLICATION SUMMARY
-              </span>
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white uppercase tracking-tight leading-[1.05]">
-                {studyAssistantProject.title}
-              </h3>
-              <p className="text-base sm:text-lg md:text-xl text-neutral-300 font-light leading-relaxed pt-1">
-                {studyAssistantProject.description}
-              </p>
-            </div>
-
-            {/* Architecture Preview Frame */}
-            <div className="space-y-2">
-              <div className="digital-image-frame group/img relative w-full aspect-[2/1] border border-white/10 bg-[#020202] overflow-hidden flex items-center justify-center transition-all duration-500 shadow-2xl">
-                <Image
-                  src={studyAssistantProject.image}
-                  alt={studyAssistantProject.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover/img:scale-[1.025]"
-                  sizes="(max-width: 1400px) 100vw, 1400px"
-                  priority
-                />
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-neutral-500 px-1">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00]" />
-                  <span>LEARNING WORKFLOW INTERFACE &amp; STUDY ANALYTICS</span>
-                </span>
-                <span className="text-neutral-400">VERIFIED SYSTEM OVERVIEW</span>
-              </div>
-            </div>
-
-            {/* Features & Technology Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-6 border-t border-white/10">
-              {/* Left: Key Features (7 cols) */}
-              <div className="lg:col-span-7 space-y-4">
-                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase tracking-wider pb-2 border-b border-white/10">
-                  <BookOpen className="w-4 h-4 text-[#B7FF00]" />
-                  <span>Core System Modules &amp; Learning Workflow</span>
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <span className="font-mono text-[11px] text-[#B7FF00] bg-[#B7FF00]/10 border border-[#B7FF00]/30 px-2.5 py-0.5 uppercase tracking-wider">
+                      {isEcho ? "FLAGSHIP AI PRODUCT" : "PERSONALIZED LEARNING"}
+                    </span>
+                    <span className="font-mono text-[11px] text-neutral-400 border border-white/10 bg-white/5 px-2.5 py-0.5 uppercase tracking-wider">
+                      FULL-STACK / AI
+                    </span>
+                  </div>
                 </div>
 
-                <ul className="space-y-3 pt-1">
-                  {studyAssistantProject.keyFeatures.map((feature, fIdx) => (
-                    <li
-                      key={fIdx}
-                      className="digital-feature-item flex items-start gap-3 text-neutral-300 font-light text-sm sm:text-base leading-relaxed"
-                    >
-                      <span className="font-mono text-[10px] text-neutral-500 mt-1 flex-shrink-0">
-                        [0{fIdx + 1}]
+                <p className="text-neutral-300 text-sm sm:text-base font-light leading-relaxed">
+                  {product.description}
+                </p>
+
+                {/* Key Capabilities */}
+                <div className="space-y-2">
+                  <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest block">
+                    KEY CAPABILITIES &amp; ARCHITECTURE
+                  </span>
+                  <ul className="space-y-1.5">
+                    {product.keyFeatures.map((feature, fIdx) => (
+                      <li
+                        key={fIdx}
+                        className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300 font-light"
+                      >
+                        <span className="font-mono text-[10px] text-neutral-500 mt-0.5 flex-shrink-0">
+                          [0{fIdx + 1}]
+                        </span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Technology Stack */}
+                <div className="space-y-2 pt-2 border-t border-white/10">
+                  <div className="flex items-center gap-2">
+                    <Code2 className="w-3.5 h-3.5 text-white" />
+                    <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+                      VERIFIED TECHNOLOGY STACK
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {product.technology.map((tech) => (
+                      <span
+                        key={tech}
+                        className="font-mono text-[11px] text-neutral-300 bg-surface-elevated border border-white/10 px-2.5 py-1 hover:border-white/30 transition-colors"
+                      >
+                        {tech}
                       </span>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Right: Technology Stack (5 cols) */}
-              <div className="lg:col-span-5 space-y-4 lg:border-l lg:border-white/10 lg:pl-8">
-                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400 uppercase tracking-wider pb-2 border-b border-white/10">
-                  <Code2 className="w-4 h-4 text-white" />
-                  <span>Verified Architecture &amp; Capabilities</span>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {studyAssistantProject.technology.map((tech) => (
-                    <span
-                      key={tech}
-                      className="digital-feature-item font-mono text-xs text-neutral-200 bg-surface-elevated border border-white/10 px-3 py-1.5 hover:border-white/30 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-4">
-                  <div className="p-4 border border-white/10 bg-white/5 space-y-1.5">
-                    <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider block">
-                      INTENDED OUTCOME
-                    </span>
-                    <p className="text-xs text-neutral-400 leading-relaxed font-mono">
-                      Personalised student learning cycles, structured study timelines, and adaptive doubt resolution workflows.
-                    </p>
+                    ))}
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </article>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

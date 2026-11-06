@@ -8,9 +8,7 @@ import { Footer } from "@/components/navigation/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSummarySection";
 import { AboutSection } from "@/components/sections/AboutSection";
-import { GraphicDesignSection } from "@/components/sections/GraphicDesignSection";
-import { UIUXSection } from "@/components/sections/UIUXSection";
-import { DigitalProductsSection } from "@/components/sections/DigitalProductsSection";
+import { CreativeSpaceSection } from "@/components/sections/CreativeSpaceSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -25,34 +23,26 @@ export default function Home() {
         {/* Anchor point for back to top */}
         <div id="top" className="sr-only" aria-hidden="true" />
 
-        {/* 1. Hero Section (Refined Content & Tagline) */}
+        {/* 1. Hero Section */}
         <HeroSection />
 
-        {/* 2. Professional Summary Section */}
+        {/* 2. Professional Summary & About Me Section */}
         <ProfessionalSummarySection />
-
-        {/* 3. About Me Section (A Creative Mind With A Technical Perspective) */}
         <AboutSection />
 
-        {/* 4. Selected Work: Graphic Design */}
-        <GraphicDesignSection />
+        {/* 3. THE CREATIVE SPACE: Direct Gateway to Dedicated Project Showcases */}
+        <CreativeSpaceSection />
 
-        {/* 5. Selected Work: UI/UX Design */}
-        <UIUXSection />
-
-        {/* 6. Beyond Visuals: Digital Products & Development */}
-        <DigitalProductsSection />
-
-        {/* 7. Experience Section */}
+        {/* 4. Experience Section */}
         <ExperienceSection />
 
-        {/* 8. Skills & Tools Section */}
+        {/* 5. Skills & Tools Section */}
         <SkillsSection />
 
-        {/* 9. Contact Section (Have a Project in Mind? Let's Create Something Meaningful) */}
+        {/* 6. Contact Section */}
         <ContactSection />
 
-        {/* 10. Editorial Footer */}
+        {/* 7. Editorial Footer */}
         <Footer />
       </main>
     </SmoothScrollProvider>

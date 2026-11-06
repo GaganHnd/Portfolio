@@ -58,6 +58,17 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
@@ -77,7 +88,7 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${cormorant.variable} ${spaceMono.variable}`}
     >
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-white/20 selection:text-white relative">
+      <body className="min-h-screen bg-[#050505] text-white font-sans antialiased selection:bg-white/20 selection:text-white relative">
         <SplashCursor
           colors={['#FFFFFF', '#FFFFFF', '#B7FF00', '#FFFFFF', '#B7FF00']}
           rainbow={false}

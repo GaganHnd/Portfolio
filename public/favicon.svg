@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <rect width="512" height="512" rx="112" fill="#050505"/>
+  <rect x="2" y="2" width="508" height="508" rx="110" fill="none" stroke="#B7FF00" stroke-width="2.5" stroke-opacity="0.15"/>
+
+  <!-- Single Contiguous G + H Left Pillar -->
+  <path d="M 244 132
+           C 152 132, 80 188, 80 256
+           C 80 324, 152 380, 244 380
+           L 272 380
+           A 24 24 0 0 0 296 356
+           L 296 132"
+        fill="none"
+        stroke="#B7FF00"
+        stroke-width="48"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <!-- Horizontal Crossbar (Continuous across midline) -->
+  <line x1="184" y1="256" x2="432" y2="256"
+        stroke="#B7FF00"
+        stroke-width="48"
+        stroke-linecap="round"/>
+
+  <!-- H Right Stem -->
+  <line x1="432" y1="132" x2="432" y2="380"
+        stroke="#B7FF00"
+        stroke-width="48"
+        stroke-linecap="round"/>
+</svg>

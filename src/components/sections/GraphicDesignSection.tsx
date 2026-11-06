@@ -5,14 +5,12 @@ import Image from "next/image";
 import { graphicDesignProjects, GraphicDesignProject } from "@/data/graphic-design";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LightboxModal } from "@/components/ui/LightboxModal";
+import { TiltImage } from "@/components/ui/TiltImage";
 import { registerGSAP, EASE } from "@/lib/animations";
-import { Maximize2, Eye, Compass, ArrowRight } from "lucide-react";
+import { Maximize2, Eye, ArrowRight } from "lucide-react";
 
 export function GraphicDesignSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const pinWrapperRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<GraphicDesignProject | null>(null);
 
   useEffect(() => {
@@ -22,7 +20,7 @@ export function GraphicDesignSection() {
     const { gsap, ScrollTrigger } = registerGSAP();
 
     const ctx = gsap.context(() => {
-      // 1. Section heading reveal
+      // 1. Section heading masked reveal
       gsap.fromTo(
         ".graphic-heading .section-heading-title",
         { yPercent: 110, opacity: 0 },
@@ -39,87 +37,30 @@ export function GraphicDesignSection() {
         }
       );
 
-      const mm = gsap.matchMedia();
-
-      // DESKTOP: Horizontal Pinned Showcase (min-width: 1024px)
-      mm.add("(min-width: 1024px)", () => {
-        const track = trackRef.current;
-        const pinWrapper = pinWrapperRef.current;
-        if (!track || !pinWrapper) return;
-
-        // Correct calculated distance: full content width minus visible container width plus end breathing room
-        const getScrollDistance = () => {
-          if (!track || !pinWrapper) return 0;
-          return Math.max(0, track.scrollWidth - pinWrapper.clientWidth + 60);
-        };
-
-        // Smooth entrance for desktop cards
+      // 2. Subtle scroll-reveal for each vertically stacked alternating row
+      const rows = gsap.utils.toArray<HTMLElement>(".graphic-project-row");
+      rows.forEach((row) => {
         gsap.fromTo(
-          ".graphic-desktop-card",
-          { opacity: 0, y: 30, scale: 0.96 },
+          row,
+          { opacity: 0, y: 35 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 0.9,
-            stagger: 0.1,
+            duration: 0.85,
             ease: EASE.cinematic,
             scrollTrigger: {
-              trigger: pinWrapper,
-              start: "top 80%",
+              trigger: row,
+              start: "top 85%",
               toggleActions: "play none none none",
             },
           }
         );
-
-        // Single dedicated GSAP tween with integrated ScrollTrigger
-        gsap.to(track, {
-          x: () => -getScrollDistance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: pinWrapper,
-            start: "top top+=80",
-            end: () => `+=${getScrollDistance()}`,
-            pin: true,
-            pinSpacing: true,
-            scrub: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (progressBarRef.current) {
-                progressBarRef.current.style.transform = `scaleX(${self.progress})`;
-              }
-            },
-          },
-        });
-      });
-
-      // MOBILE & TABLET: Natural Vertical Staggered Reveals (max-width: 1023px)
-      mm.add("(max-width: 1023px)", () => {
-        const mobileCards = gsap.utils.toArray<HTMLElement>(".graphic-mobile-card");
-        mobileCards.forEach((card) => {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: EASE.cinematic,
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
-        });
       });
     }, containerRef);
 
-    // Refresh after DOM layout is established to ensure exact dimensions
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 250);
+    }, 200);
 
     return () => {
       clearTimeout(refreshTimer);
@@ -131,77 +72,140 @@ export function GraphicDesignSection() {
     <section
       ref={containerRef}
       id="work"
-      className="space-y-8 sm:space-y-12 relative"
+      className="space-y-12 sm:space-y-16 relative"
       aria-label="Graphic Design Selected Work"
     >
       <SectionHeading
         className="graphic-heading"
-        index="03"
+        index="01"
         category="SELECTED WORK"
         title="GRAPHIC DESIGN."
         subtitle="Event poster compositions, promotional creative direction, and geometric visual identities."
       />
 
       {/* =========================================================================
-          DESKTOP PINNED HORIZONTAL SHOWCASE (lg:block hidden)
-          Pins in viewport and glides horizontally through all 4 projects
+          VERTICALLY STACKED ALTERNATING PROJECT SHOWCASE
+          Desktop: Alternating Left-Right
+          Mobile & Tablet: Image stacked consistently on top of description
       ========================================================================== */}
-      <div ref={pinWrapperRef} className="hidden lg:block w-full overflow-hidden">
-        {/* Pinned Gallery Telemetry Bar */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-6 font-mono text-xs text-neutral-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#B7FF00] animate-pulse" />
-            <span className="text-white font-medium">HORIZONTAL SHOWCASE</span>
-            <span className="text-neutral-600">•</span>
-            <span className="text-neutral-500">SCROLL DOWN TO TRAVERSE PROJECTS</span>
-          </div>
+      <div className="space-y-20 sm:space-y-28 lg:space-y-36">
+        {graphicDesignProjects.map((project, idx) => {
+          const isEven = idx % 2 === 0;
+          const isLogo = project.aspectRatio === "square";
+          const projectNum = `0${idx + 1}`;
 
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] text-neutral-500 uppercase tracking-widest">
-              PROGRESS
-            </span>
-            <div className="w-32 h-[2px] bg-white/10 relative overflow-hidden">
+          return (
+            <article
+              key={project.id}
+              className="graphic-project-row grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20 items-center"
+            >
+              {/* IMAGE CONTAINER: Left on Even, Right on Odd (Desktop) | Top on Mobile */}
               <div
-                ref={progressBarRef}
-                className="absolute inset-0 bg-[#B7FF00] origin-left will-change-transform"
-                style={{ transform: "scaleX(0)" }}
-              />
-            </div>
-            <span className="text-neutral-400 font-bold">04 PROJECTS</span>
-          </div>
-        </div>
-
-        {/* Horizontal Track */}
-        <div
-          ref={trackRef}
-          className="flex flex-row gap-8 items-stretch will-change-transform w-max pr-16 pb-4"
-        >
-          {graphicDesignProjects.map((project, idx) => {
-            const isLogo = project.aspectRatio === "square";
-
-            return (
-              <article
-                key={`desktop-${project.id}`}
-                onClick={() => setSelectedProject(project)}
-                className="graphic-desktop-card w-[480px] xl:w-[540px] 2xl:w-[580px] flex-shrink-0 border border-white/10 bg-surface flex flex-col justify-between hover:border-white/30 transition-all duration-300 group cursor-pointer relative overflow-hidden shadow-2xl"
-                role="button"
-                tabIndex={0}
-                aria-label={`View ${project.title} details`}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setSelectedProject(project);
-                  }
-                }}
+                className={`w-full ${
+                  isEven
+                    ? "order-1 lg:order-1 lg:col-span-7"
+                    : "order-1 lg:order-2 lg:col-span-7"
+                }`}
               >
-                {/* Card Header Telemetry */}
-                <div className="flex items-center justify-between border-b border-white/10 px-6 py-3.5 bg-surface-elevated/70 z-10">
-                  <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-                    0{idx + 1} / {project.category}
-                  </span>
-                  <div className="flex items-center gap-2">
+                <div
+                  onClick={() => setSelectedProject(project)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedProject(project);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View full design for ${project.title}`}
+                  className="group relative border border-white/10 hover:border-white/30 bg-[#030303] transition-all duration-300 cursor-pointer overflow-hidden shadow-2xl block"
+                >
+                  {/* Card Header Telemetry */}
+                  <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 bg-surface-elevated/70">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#B7FF00]" />
+                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">
+                        {projectNum} — {project.category}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 border ${
+                          project.tool === "Figma"
+                            ? "text-[#B7FF00] border-[#B7FF00]/30 bg-[#B7FF00]/10"
+                            : "text-amber-300 border-amber-500/30 bg-amber-500/10"
+                        }`}
+                      >
+                        TOOL: {project.tool}
+                      </span>
+                      <Maximize2 className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white transition-colors" />
+                    </div>
+                  </div>
+
+                  {/* Aspect-Preserving Image Frame with 3D Tilt */}
+                  <div className="relative w-full bg-[#030303] flex items-center justify-center p-6 sm:p-10 min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] overflow-hidden">
+                    <div className="absolute inset-0 bg-radial-gradient from-white/[0.02] to-transparent pointer-events-none" />
+
+                    <TiltImage
+                      className={`w-full ${
+                        isLogo
+                          ? "max-w-[320px] sm:max-w-[380px] aspect-square"
+                          : "max-w-[340px] sm:max-w-[400px] xl:max-w-[440px] aspect-[723/1024] shadow-2xl"
+                      }`}
+                      maxTilt={4}
+                    >
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className={`object-contain ${
+                            isLogo ? "" : "border border-white/10"
+                          }`}
+                          sizes="(max-width: 1024px) 100vw, 55vw"
+                          priority={idx === 0}
+                        />
+
+                        {/* Expand overlay cue */}
+                        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/90 backdrop-blur-md border border-white/25 px-2.5 py-1 shadow-lg pointer-events-none">
+                          <Eye className="w-3 h-3 text-[#B7FF00]" />
+                          <span>EXPAND POSTER</span>
+                        </div>
+                      </div>
+                    </TiltImage>
+                  </div>
+                </div>
+              </div>
+
+              {/* DESCRIPTION CONTAINER: Right on Even, Left on Odd (Desktop) | Bottom on Mobile */}
+              <div
+                className={`w-full space-y-6 ${
+                  isEven
+                    ? "order-2 lg:order-2 lg:col-span-5"
+                    : "order-2 lg:order-1 lg:col-span-5"
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-[#B7FF00] font-semibold tracking-widest">
+                      PROJECT {projectNum}
+                    </span>
+                    <span className="text-neutral-600 font-mono text-xs">•</span>
+                    <span className="font-mono text-xs text-neutral-400 uppercase tracking-wider">
+                      {project.year}
+                    </span>
+                  </div>
+
+                  <h3 className="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-white uppercase tracking-tight leading-none">
+                    {project.title}
+                  </h3>
+
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider border border-white/10 bg-white/5 px-2.5 py-0.5">
+                      {project.category}
+                    </span>
                     <span
-                      className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 border ${
+                      className={`font-mono text-[11px] uppercase tracking-wider px-2.5 py-0.5 border ${
                         project.tool === "Figma"
                           ? "text-[#B7FF00] border-[#B7FF00]/30 bg-[#B7FF00]/10"
                           : "text-amber-300 border-amber-500/30 bg-amber-500/10"
@@ -209,147 +213,22 @@ export function GraphicDesignSection() {
                     >
                       TOOL: {project.tool}
                     </span>
-                    <Maximize2 className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white transition-colors" />
                   </div>
                 </div>
 
-                {/* Aspect-Preserving Image Frame (Uncropped!) */}
-                <div className="relative w-full bg-[#030303] flex items-center justify-center p-6 h-[440px] xl:h-[480px] overflow-hidden">
-                  <div
-                    className={`graphic-image-inner relative w-full ${
-                      isLogo
-                        ? "max-w-[340px] aspect-square"
-                        : "max-w-[340px] xl:max-w-[370px] aspect-[723/1024] shadow-2xl"
-                    } transition-transform duration-500 ease-out group-hover:scale-[1.025]`}
-                  >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className={`object-contain ${
-                        isLogo ? "" : "border border-white/10"
-                      }`}
-                      sizes="(max-width: 1280px) 500px, 600px"
-                      priority={idx < 2}
-                    />
-
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/85 backdrop-blur-md border border-white/25 px-2.5 py-1 shadow-lg pointer-events-none">
-                      <Eye className="w-3 h-3 text-[#B7FF00]" />
-                      <span>EXPAND</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Meta Narrative */}
-                <div className="p-6 border-t border-white/10 bg-surface space-y-3">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <h3 className="font-heading font-black text-2xl xl:text-3xl text-white uppercase tracking-tight group-hover:text-neutral-200 transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="font-mono text-xs text-neutral-500">{project.year}</span>
-                  </div>
-
-                  <p className="text-sm text-neutral-300 font-light leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="pt-2 flex items-center justify-between font-mono text-[11px] text-neutral-500 border-t border-white/5">
-                    <span className="uppercase tracking-wider">
-                      {project.category} • {project.tool}
-                    </span>
-                    <span className="text-neutral-400 group-hover:text-white transition-colors flex items-center gap-1">
-                      Click to view full design →
-                    </span>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* =========================================================================
-          MOBILE & TABLET NATURAL VERTICAL GALLERY (block lg:hidden)
-          Clean vertical stack with natural touch scrolling
-      ========================================================================== */}
-      <div className="block lg:hidden space-y-8">
-        {graphicDesignProjects.map((project, idx) => {
-          const isLogo = project.aspectRatio === "square";
-
-          return (
-            <article
-              key={`mobile-${project.id}`}
-              onClick={() => setSelectedProject(project)}
-              className="graphic-mobile-card border border-white/10 bg-surface flex flex-col justify-between hover:border-white/25 transition-all duration-300 group cursor-pointer relative overflow-hidden"
-              role="button"
-              tabIndex={0}
-              aria-label={`View ${project.title} details`}
-            >
-              {/* Card Header Telemetry */}
-              <div className="flex items-center justify-between border-b border-white/10 px-5 py-3.5 bg-surface-elevated/70 z-10">
-                <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-                  0{idx + 1} / {project.category}
-                </span>
-                <span
-                  className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 border ${
-                    project.tool === "Figma"
-                      ? "text-[#B7FF00] border-[#B7FF00]/30 bg-[#B7FF00]/10"
-                      : "text-amber-300 border-amber-500/30 bg-amber-500/10"
-                  }`}
-                >
-                  TOOL: {project.tool}
-                </span>
-              </div>
-
-              {/* Aspect-Preserving Image Container */}
-              <div
-                className={`relative w-full bg-[#030303] flex items-center justify-center p-4 sm:p-6 overflow-hidden ${
-                  isLogo ? "min-h-[320px] sm:min-h-[380px]" : "min-h-[380px] sm:min-h-[460px]"
-                }`}
-              >
-                <div
-                  className={`relative w-full ${
-                    isLogo
-                      ? "max-w-[280px] sm:max-w-[340px] aspect-square"
-                      : "max-w-[320px] sm:max-w-[380px] aspect-[723/1024] shadow-2xl"
-                  }`}
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className={`object-contain ${
-                      isLogo ? "" : "border border-white/10"
-                    }`}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/85 border border-white/25 px-2 py-1 shadow-lg">
-                    <Eye className="w-3 h-3 text-[#B7FF00]" />
-                    <span>VIEW</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Meta Narrative */}
-              <div className="p-5 sm:p-6 border-t border-white/10 bg-surface space-y-3">
-                <div className="flex items-baseline justify-between gap-2">
-                  <h3 className="font-heading font-black text-xl sm:text-2xl text-white uppercase tracking-tight">
-                    {project.title}
-                  </h3>
-                  <span className="font-mono text-xs text-neutral-500">{project.year}</span>
-                </div>
-
-                <p className="text-sm text-neutral-300 font-light leading-relaxed">
+                <p className="text-neutral-300 text-sm sm:text-base font-light leading-relaxed">
                   {project.description}
                 </p>
 
-                <div className="pt-2 flex items-center justify-between font-mono text-[11px] text-neutral-500 border-t border-white/5">
-                  <span className="uppercase tracking-wider">
-                    {project.category} • {project.tool}
-                  </span>
-                  <span className="text-neutral-300 flex items-center gap-1">
-                    Tap to expand full view →
-                  </span>
+                <div className="pt-2 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedProject(project)}
+                    className="inline-flex items-center gap-2.5 font-mono text-xs text-white hover:text-[#B7FF00] border border-white/15 hover:border-[#B7FF00]/50 bg-white/5 hover:bg-white/10 px-5 py-2.5 transition-all group/btn"
+                  >
+                    <span>VIEW FULL DESIGN</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                  </button>
                 </div>
               </div>
             </article>
