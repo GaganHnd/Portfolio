@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { digitalProducts } from "@/data/digital-products";
+import { digitalProducts, DigitalProduct } from "@/data/digital-products";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { LightboxModal } from "@/components/ui/LightboxModal";
 import { TiltImage } from "@/components/ui/TiltImage";
 import { registerGSAP, EASE } from "@/lib/animations";
-import { Bot, BookOpen, Code2, Terminal } from "lucide-react";
+import { Bot, BookOpen, Code2, Terminal, Maximize2, Eye, ArrowRight } from "lucide-react";
 
 export function DigitalProductsSection() {
   const containerRef = useRef<HTMLElement>(null);
+  const [selectedProduct, setSelectedProduct] = useState<DigitalProduct | null>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -122,7 +124,19 @@ export function DigitalProductsSection() {
                     : "order-1 lg:order-2 lg:col-span-7"
                 }`}
               >
-                <div className="group relative border border-white/10 hover:border-white/30 bg-[#030303] transition-all duration-300 overflow-hidden shadow-2xl block">
+                <div
+                  onClick={() => setSelectedProduct(product)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedProduct(product);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Enlarge preview for ${product.title}`}
+                  className="group relative border border-white/10 hover:border-white/30 bg-[#030303] transition-all duration-300 cursor-pointer overflow-hidden shadow-2xl block"
+                >
                   {/* Top Header Telemetry */}
                   <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 bg-surface-elevated/70">
                     <div className="flex items-center gap-2">
@@ -140,6 +154,7 @@ export function DigitalProductsSection() {
                       <span className="uppercase tracking-wider">
                         {isEcho ? "VOICE & CHAT ARCHITECTURE" : "MIND MENTOR PLATFORM"}
                       </span>
+                      <Maximize2 className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white transition-colors ml-1" />
                     </div>
                   </div>
 
@@ -158,6 +173,12 @@ export function DigitalProductsSection() {
                           sizes="(max-width: 1024px) 100vw, 55vw"
                           priority={idx === 0}
                         />
+
+                        {/* Expand overlay cue */}
+                        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5 font-mono text-[10px] text-white bg-black/90 backdrop-blur-md border border-white/25 px-2.5 py-1 shadow-lg pointer-events-none">
+                          <Eye className="w-3 h-3 text-[#B7FF00]" />
+                          <span>ENLARGE PREVIEW</span>
+                        </div>
                       </div>
                     </TiltImage>
                   </div>
@@ -249,11 +270,35 @@ export function DigitalProductsSection() {
                     ))}
                   </div>
                 </div>
+
+                {/* CTA Action */}
+                <div className="pt-2 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedProduct(product)}
+                    className="inline-flex items-center gap-2.5 font-mono text-xs text-white hover:text-[#B7FF00] border border-white/15 hover:border-[#B7FF00]/50 bg-white/5 hover:bg-white/10 px-5 py-2.5 transition-all group/btn"
+                  >
+                    <span>VIEW FULL PREVIEW</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                  </button>
+                </div>
               </div>
             </article>
           );
         })}
       </div>
+
+      {/* Lightbox Modal for Full Aspect-Ratio Detail View */}
+      {selectedProduct && (
+        <LightboxModal
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          title={selectedProduct.title}
+          category={selectedProduct.category}
+          image={selectedProduct.image}
+          description={selectedProduct.description}
+        />
+      )}
     </section>
   );
 }

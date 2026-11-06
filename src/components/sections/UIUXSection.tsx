@@ -20,6 +20,18 @@ export function UIUXSection() {
     const { gsap, ScrollTrigger } = registerGSAP();
 
     const ctx = gsap.context(() => {
+      // 0. Visual transition thread connector
+      gsap.to(".uiux-transition-glow", {
+        scaleX: 1,
+        duration: 1.2,
+        ease: "power3.inOut",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      });
+
       // 1. Section heading masked reveal
       gsap.fromTo(
         ".uiux-heading .section-heading-title",
@@ -71,10 +83,18 @@ export function UIUXSection() {
   return (
     <section
       ref={containerRef}
-      id="ui-ux"
+      id="ui-ux-design"
       className="space-y-12 sm:space-y-16 relative"
       aria-label="UI/UX Design Projects"
     >
+      {/* Anchor point for #ui-ux */}
+      <div id="ui-ux" className="sr-only" aria-hidden="true" />
+
+      {/* Visual Transition Thread Connector */}
+      <div className="uiux-transition-strip relative h-[1px] w-full bg-white/10 overflow-hidden">
+        <div className="uiux-transition-glow absolute inset-0 bg-gradient-to-r from-transparent via-[#B7FF00] to-transparent origin-left scale-x-0 will-change-transform" />
+      </div>
+
       <SectionHeading
         className="uiux-heading"
         index="02"

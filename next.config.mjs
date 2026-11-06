@@ -11,6 +11,25 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/graphic-design',
+        destination: '/#graphic-design',
+        permanent: false,
+      },
+      {
+        source: '/ui-ux-design',
+        destination: '/#ui-ux-design',
+        permanent: false,
+      },
+      {
+        source: '/digital-products',
+        destination: '/#digital-products',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

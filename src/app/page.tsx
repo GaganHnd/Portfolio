@@ -8,7 +8,9 @@ import { Footer } from "@/components/navigation/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProfessionalSummarySection } from "@/components/sections/ProfessionalSummarySection";
 import { AboutSection } from "@/components/sections/AboutSection";
-import { CreativeSpaceSection } from "@/components/sections/CreativeSpaceSection";
+import { GraphicDesignSection } from "@/components/sections/GraphicDesignSection";
+import { UIUXSection } from "@/components/sections/UIUXSection";
+import { DigitalProductsSection } from "@/components/sections/DigitalProductsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -30,19 +32,25 @@ export default function Home() {
         <ProfessionalSummarySection />
         <AboutSection />
 
-        {/* 3. THE CREATIVE SPACE: Direct Gateway to Dedicated Project Showcases */}
-        <CreativeSpaceSection />
+        {/* 3. Section 01: Graphic Design */}
+        <GraphicDesignSection />
 
-        {/* 4. Experience Section */}
+        {/* 4. Section 02: UI/UX Design */}
+        <UIUXSection />
+
+        {/* 5. Section 03: Digital Products & Development */}
+        <DigitalProductsSection />
+
+        {/* 6. Experience Section */}
         <ExperienceSection />
 
-        {/* 5. Skills & Tools Section */}
+        {/* 7. Skills & Tools Section */}
         <SkillsSection />
 
-        {/* 6. Contact Section */}
+        {/* 8. Contact Section */}
         <ContactSection />
 
-        {/* 7. Editorial Footer */}
+        {/* 9. Editorial Footer */}
         <Footer />
       </main>
     </SmoothScrollProvider>

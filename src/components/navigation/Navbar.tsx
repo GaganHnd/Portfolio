@@ -12,11 +12,14 @@ import { useLenis } from "@/components/animations/SmoothScrollProvider";
 
 interface NavItem {
   label: string;
+  shortLabel?: string;
   href: string;
 }
 
 const navItems: NavItem[] = [
-  { label: "WORK", href: "#work" },
+  { label: "GRAPHIC DESIGN", shortLabel: "GRAPHIC", href: "#graphic-design" },
+  { label: "UI/UX DESIGN", shortLabel: "UI/UX", href: "#ui-ux-design" },
+  { label: "DIGITAL PRODUCTS", shortLabel: "DIGITAL", href: "#digital-products" },
   { label: "ABOUT", href: "#about" },
   { label: "CONTACT", href: "#contact" },
 ];
@@ -202,7 +205,7 @@ export function Navbar() {
           </MagneticWrapper>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8" aria-label="Main Navigation">
             {navItems.map((item) => {
               if (item.label === "CONTACT") {
                 return (
@@ -307,13 +310,14 @@ export function Navbar() {
                     href={navHref}
                     onClick={(e) => handleNavClick(e, item.href)}
                     className={cn(
-                      "font-mono text-xs uppercase tracking-widest transition-colors py-1 relative",
+                      "font-mono text-xs uppercase tracking-widest transition-colors py-1 relative whitespace-nowrap",
                       isActive
                         ? "text-white font-semibold"
                         : "text-neutral-400 hover:text-white"
                     )}
                   >
-                    <span>{item.label}</span>
+                    <span className="hidden xl:inline">{item.label}</span>
+                    <span className="xl:hidden">{item.shortLabel || item.label}</span>
                     {isActive && (
                       <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-white transition-all" />
                     )}

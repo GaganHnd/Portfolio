@@ -51,8 +51,10 @@ export function Footer() {
 
   const footerNavLinks = [
     { label: "Home", href: "#top" },
+    { label: "Graphic Design", href: "#graphic-design" },
+    { label: "UI/UX Design", href: "#ui-ux-design" },
+    { label: "Digital Products", href: "#digital-products" },
     { label: "About", href: "#about" },
-    { label: "Work", href: "#work" },
     { label: "Experience", href: "#experience" },
     { label: "Skills", href: "#skills" },
     { label: "Contact", href: "#contact" },

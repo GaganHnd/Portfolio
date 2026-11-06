@@ -71,10 +71,13 @@ export function GraphicDesignSection() {
   return (
     <section
       ref={containerRef}
-      id="work"
+      id="graphic-design"
       className="space-y-12 sm:space-y-16 relative"
       aria-label="Graphic Design Selected Work"
     >
+      {/* Anchor point for #work link */}
+      <div id="work" className="sr-only" aria-hidden="true" />
+
       <SectionHeading
         className="graphic-heading"
         index="01"
